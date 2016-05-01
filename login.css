@@ -1,0 +1,80 @@
+div#header {
+    width: 800px;
+    height: 100px;
+    background-color: #003399;
+    margin-top: -10px;
+    margin-left: 50%;
+    margin-right: 50%;
+    margin: auto;
+    margin-top: -8px;
+    line-height: 100px;
+}
+
+div#header a {
+  text-decoration: none;
+}
+
+span#header-title {
+    margin-left: 25px;
+    font-family: Arial;
+    font-size: 56px;
+    color: white;
+}
+
+div#outer-container {
+    display: table;
+    width: 400px;
+    height: 300px;
+    margin-left: 50%;
+    margin-right: 50%;
+    margin: auto;
+    margin-top: 100px;
+    background: #CDDC39;
+}
+
+div#inner-container {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+div#center-container {
+    display: inline-block;
+    background: #CDDC39;
+    padding: 20px;
+}
+
+caption#table-title {
+    text-align: center;
+    font-size: 24px;
+    font-family: Arial;
+}
+
+th.row-title {
+    font-family: Arial;
+    text-align: right;
+    font-size: 14px;
+}
+
+td#forgot-pass {
+    text-align: right;
+}
+
+caption#table-title {
+    height: 70px;
+}
+
+button#action-button {
+    width: 150px;
+    height: 35px;
+    border: none;
+    background-color: #003399;
+    color: white;
+    font-family: Arial;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+#action-button:hover{
+  border: 2px solid black;
+}
