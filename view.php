@@ -40,14 +40,27 @@
 
       <!-- Configuration container -->
       <div id="product-category-base" class="product-category-base">
-        <!-- Categories and products containers -->
-        <div id="category-div">
-          <?php foreach (model_load_catergory() as $block): ?>
-            <div class="category-btn" name="category-btn">
+        <!-- Categories and products container -->
+        <form id="category-product-buttons-form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
+        <?php foreach (model_load_catergory() as $block): ?>
+          <div class="category-btn" name="category-btn">
+            <?= htmlspecialchars($block['Nimetus']); ?>
+          </div>
+        <?php endforeach; ?>
+        <?php foreach (model_load_product() as $block): ?>
+          <div class="product-btn" name="product-btn">
+            <div name="delete-product">
+              X
+            </div>
+            <div>
               <?= htmlspecialchars($block['Nimetus']); ?>
             </div>
-          <?php endforeach; ?>
-        </div>
+            <div>
+              <?= htmlspecialchars($block['Hind'] . " €"); ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </form>
         <!-- Category adding form -->
         <div id="category-add-div">
           <h1 id="adding-title"># Kategooria lisamine</h1>

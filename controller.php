@@ -20,3 +20,7 @@ function controller_category_id($category_name) {
   }
   return model_category_id($category_name);
 }
+
+function controller_delete_product($id) {
+  return model_delete($id);
+}

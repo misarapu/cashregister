@@ -156,6 +156,7 @@ input[type="submit"]:hover {
 
 /* Products and categories base container */
 .product-category-base {
+  font-family: Arial, sans-serif;
   position: relative;
   height: 500px;
   width: 800px;
@@ -196,15 +197,20 @@ input[type="submit"]:hover {
 }
 
 /* Product button */
-.product-button {
+.product-btn {
+  width: 96px;
   border: 2px solid black;
-  background:lightblue;
-  width: 100px;
+  background: #00BCD4;
+  width: 96px;
   height: 60px;
   position: relative;
   float: left;
+  word-wrap: break-word;
+  overflow: hidden;
+  font-weight: bold;
+  padding-top: 7px;
 }
-input[type="button"].product-button:hover {
+.product-btn:hover {
   border-color: white;
 }
 
@@ -238,10 +244,10 @@ input[type="button"].config-button {
 }
 
 /* Category and product adding forms */
-#product-category-base {
+#product-category-div {
   font-family: Arial, sans-serif;
 }
-#product-category-base th {
+#product-category-div th {
   text-align: right;
 }
 #category-add-div, #product-add-div {

@@ -21,6 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $product_quantity = $_POST['product-quantity-input'];
       $result = controller_add_product($product_name, $category_id, $product_code, $product_price, $product_quantity);
       break;
+    case 'delete-prduct':
+      $id = intval($_POST['id']);
+      $result = controller_delete($id);
+      break;
   }
 
   if ($result) {
