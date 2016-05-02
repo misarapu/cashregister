@@ -41,26 +41,28 @@
       <!-- Configuration container -->
       <div id="product-category-base" class="product-category-base">
         <!-- Categories and products container -->
-        <form id="category-product-buttons-form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
-        <?php foreach (model_load_catergory() as $block): ?>
-          <div class="category-btn" name="category-btn">
-            <?= htmlspecialchars($block['Nimetus']); ?>
-          </div>
-        <?php endforeach; ?>
-        <?php foreach (model_load_product() as $block): ?>
-          <div class="product-btn" name="product-btn">
-            <div name="delete-product">
-              X
-            </div>
-            <div>
-              <?= htmlspecialchars($block['Nimetus']); ?>
-            </div>
-            <div>
-              <?= htmlspecialchars($block['Hind'] . " €"); ?>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      </form>
+        <div id="category-product-buttons-div">
+          <?php foreach(model_load_catergory() as $block): ?>
+            <form class="c-id-<?= $block['Id']; ?>" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
+              <input type="hidden" name="action" value="category-btn">
+              <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+              <button type="submit" class="category-btn">
+                <?= htmlspecialchars($block['Nimetus']); ?>
+              </button>
+            </form>
+          <?php endforeach; ?>
+          <?php foreach(model_load_product() as $block): ?>
+            <form class="cp-id-<?= $block['CatId']; ?>" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
+              <input type="hidden" name="action" value="product-btn">
+              <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+              <button type="submit" class="product-btn">
+                <?= htmlspecialchars($block['Nimetus']); ?>
+                <br>
+                <?= htmlspecialchars($block['Hind'] . " €"); ?>
+              </button>
+            </form>
+          <?php endforeach; ?>
+        </div>
         <!-- Category adding form -->
         <div id="category-add-div">
           <h1 id="adding-title"># Kategooria lisamine</h1>

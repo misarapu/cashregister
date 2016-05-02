@@ -11,14 +11,15 @@ mysqli_query($l, "SET CHARACTER SET UTF8") or
 
 function model_load_catergory() {
   global $l;
-  $query = 'SELECT Nimetus FROM kategooriad ORDER BY Nimetus ASC';
+  $query = 'SELECT Id, Nimetus FROM kategooriad ORDER BY Nimetus ASC';
   $stmt = mysqli_prepare($l, $query);
   mysqli_execute($stmt);
-  mysqli_stmt_bind_result($stmt, $nimetus);
+  mysqli_stmt_bind_result($stmt, $id, $nimetus);
 
   $blocks = array();
   while (mysqli_stmt_fetch($stmt)) {
     $blocks[] = array(
+      'Id' => $id,
       'Nimetus' => $nimetus
     );
   }
@@ -28,15 +29,16 @@ function model_load_catergory() {
 
 function model_load_product() {
   global $l;
-  $query = 'SELECT Nimetus, Hind FROM kaubad ORDER BY Nimetus ASC';
+  $query = 'SELECT Id, Nimetus, Kategooria, Hind FROM kaubad ORDER BY Nimetus ASC';
   $stmt = mysqli_prepare($l, $query);
   mysqli_execute($stmt);
-  mysqli_stmt_bind_result($stmt, $nimetus, $hind);
-
+  mysqli_stmt_bind_result($stmt, $id, $nimetus, $catId, $hind);
   $blocks = array();
   while (mysqli_stmt_fetch($stmt)) {
     $blocks[] = array(
+      'Id' => $id,
       'Nimetus' => $nimetus,
+      'CatId' => $catId,
       'Hind' => $hind
     );
   }
@@ -79,14 +81,4 @@ function model_category_id($category_name) {
   }
   mysqli_stmt_close($stmt);
   return $logIds[0];
-}
-
-function model_delete_product($id) {
-  global $l;
-  $query = 'DELETE FROM kaubad WHERE Id=? LIMIT 1';
-  $stmt = mysqli_prepare($l, $query);
-  mysqli_stmt_bind_param($stmt, 'i', $id);
-  $deleted = mysqli_stmt_affected_rows($stmt);
-  mysqli_stmt_close($stmt);
-  return $deleted;
 }

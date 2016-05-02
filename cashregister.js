@@ -23,7 +23,7 @@ function configHideShow (showDivId) {
 
 /*Show homepage*/
 document.getElementById('home').addEventListener('click', function(event) {
-    configHideShow('category-div');
+    configHideShow('category-product-buttons-div');
 });
 
 /*Show catecory adding page*/
