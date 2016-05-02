@@ -1,7 +1,7 @@
 'use strict';
 
 /*----------------------------------------------------------------------------*/
-/*                              DISPLAYING DIVS                               */
+/*                              DISPLAYING MAIN DIVS                          */
 /*----------------------------------------------------------------------------*/
 
 /**
@@ -9,8 +9,7 @@
  * Kuvatakse soovitav div.
  * @param {String} div, mida soovitakse kuvada.
  */
-function configHideShow (showDivId) {
-
+function configHideShow(showDivId) {
   var divs = document.getElementById('product-category-base').children;
   for(var i = 0; i < divs.length; i++) {
     if(divs[i].id == showDivId){
@@ -23,7 +22,7 @@ function configHideShow (showDivId) {
 
 /*Show homepage*/
 document.getElementById('home').addEventListener('click', function(event) {
-    configHideShow('category-product-buttons-div');
+    configHideShow('categories-div');
 });
 
 /*Show catecory adding page*/
@@ -37,6 +36,10 @@ document.getElementById('add-product-page').addEventListener('click', function(e
 });
 
 /*----------------------------------------------------------------------------*/
+/*                  DISPLAYING CATEGORY AND PRODUCT BUTTONS                   */
+/*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
 /*                       PRODUCT ACTIONS, FUCTIONS ETC                        */
 /*----------------------------------------------------------------------------*/
 
@@ -45,61 +48,62 @@ document.getElementById('add-product-page').addEventListener('click', function(e
  * @param {name}
  *        {price}
  */
-function addToShoppingCart(name, price) {
+ function addToShoppingCart(name, price) {
 
-  var tableMain = document.getElementById('order-list');
-  var tableBody = document.querySelector('#order-list tbody');
-  var totalCostDiv = document.getElementById('cost-total');
-  var row = document.createElement('tr');
-	var nameTd = document.createElement('td');
-	var quantityTd = document.createElement('td');
-  var priceTd = document.createElement('td');
-	var deleteTd = document.createElement('td');
-  var quantityIn = document.createElement('input')
-  var deleteButton = document.createElement('button');
+   var tableMain = document.getElementById('order-list');
+   var tableBody = document.querySelector('#order-list tbody');
+   var totalCostDiv = document.getElementById('cost-total');
+   var row = document.createElement('tr');
+ 	var nameTd = document.createElement('td');
+ 	var quantityTd = document.createElement('td');
+   var priceTd = document.createElement('td');
+ 	var deleteTd = document.createElement('td');
+   var quantityIn = document.createElement('input')
+   var deleteButton = document.createElement('button');
 
-  nameTd.textContent = name;
-  priceTd.textContent = parseFloat(price).toFixed(2);
-  priceTd.setAttribute('id', 'row-price');
-  priceTd.setAttribute('class', 'row-prices');
-  quantityIn.setAttribute('type', 'number');
-  quantityIn.setAttribute('min', '1');
-  quantityIn.value = '1';
-  deleteButton.textContent = 'X';
-  deleteButton.style.backgroundColor = '#ff5c33';
-  deleteButton.style.fontWeight = 'bold';
+   nameTd.textContent = name;
+   priceTd.textContent = parseFloat(price).toFixed(2);
+   priceTd.setAttribute('id', 'row-price');
+   priceTd.setAttribute('class', 'row-prices');
+   quantityIn.setAttribute('type', 'number');
+   quantityIn.setAttribute('min', '1');
+   quantityIn.value = '1';
+   deleteButton.textContent = 'X';
+   deleteButton.style.backgroundColor = '#ff5c33';
+   deleteButton.style.fontWeight = 'bold';
 
-  quantityTd.appendChild(quantityIn);
-  deleteTd.appendChild(deleteButton);
-  row.appendChild(nameTd);
-  row.appendChild(quantityTd);
-  row.appendChild(priceTd);
-  row.appendChild(deleteTd);
-  row.style.borderBottom = '1px dashed black';
-  tableBody.appendChild(row);
+   quantityTd.appendChild(quantityIn);
+   deleteTd.appendChild(deleteButton);
+   row.appendChild(nameTd);
+   row.appendChild(quantityTd);
+   row.appendChild(priceTd);
+   row.appendChild(deleteTd);
+   row.style.borderBottom = '1px dashed black';
+   tableBody.appendChild(row);
 
-  var totalCost = parseFloat(totalCostDiv.textContent);
-  var rowPrice = document.getElementById('row-price');
-  var rowPrices = document.getElementsByClassName('row-prices');
+   var totalCost = parseFloat(totalCostDiv.textContent);
+   var rowPrice = document.getElementById('row-price');
+   var rowPrices = document.getElementsByClassName('row-prices');
 
-  quantityIn.addEventListener('change', function(event) {
-    priceTd.textContent = parseFloat(Math.round(price * quantityIn.value * 100) / 100).toFixed(2);
-  });
+   quantityIn.addEventListener('change', function(event) {
+     priceTd.textContent = parseFloat(Math.round(price * quantityIn.value * 100) / 100).toFixed(2);
+   });
 
-  quantityIn.addEventListener('change', function(event) {
-    var newTotalCost = 0;
-    for (var i = 0; i < rowPrices.length; i++) {
-      newTotalCost = newTotalCost + parseFloat(rowPrices[i].textContent);
-    }
-    totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
-  });
+   quantityIn.addEventListener('change', function(event) {
+     var newTotalCost = 0;
+     for (var i = 0; i < rowPrices.length; i++) {
+       newTotalCost = newTotalCost + parseFloat(rowPrices[i].textContent);
+     }
+     totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
+   });
 
-  deleteButton.addEventListener('click', function(event) {
-    row.parentNode.removeChild(row);
-    var newTotalCost = 0;
-    for (var i = 0; i < rowPrices.length; i++) {
-      newTotalCost = newTotalCost + parseFloat(rowPrices[i].textContent);
-    }
-    totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
-  });
-}
+   deleteButton.addEventListener('click', function(event) {
+     row.parentNode.removeChild(row);
+     var newTotalCost = 0;
+     for (var i = 0; i < rowPrices.length; i++) {
+       newTotalCost = newTotalCost + parseFloat(rowPrices[i].textContent);
+     }
+     totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
+   });
+
+ }

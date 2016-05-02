@@ -26,8 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   if ($result) {
-    echo 'jou';
-    //header('Location: '.$_SERVER['PHP_SELF']);
+    header('Location: '.$_SERVER['PHP_SELF']);
   } else {
     header('Content-type: text/plain; charset=utf-8');
     echo 'Päring ebaõnnetus!';

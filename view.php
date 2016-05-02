@@ -41,28 +41,22 @@
       <!-- Configuration container -->
       <div id="product-category-base" class="product-category-base">
         <!-- Categories and products container -->
-        <div id="category-product-buttons-div">
+        <div id="categories-div">
           <?php foreach(model_load_catergory() as $block): ?>
-            <form class="c-id-<?= $block['Id']; ?>" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
-              <input type="hidden" name="action" value="category-btn">
-              <input type="hidden" name="id" value="<?= $block['Id']; ?>">
-              <button type="submit" class="category-btn">
-                <?= htmlspecialchars($block['Nimetus']); ?>
-              </button>
-            </form>
-          <?php endforeach; ?>
-          <?php foreach(model_load_product() as $block): ?>
-            <form class="cp-id-<?= $block['CatId']; ?>" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
-              <input type="hidden" name="action" value="product-btn">
-              <input type="hidden" name="id" value="<?= $block['Id']; ?>">
-              <button type="submit" class="product-btn">
-                <?= htmlspecialchars($block['Nimetus']); ?>
-                <br>
-                <?= htmlspecialchars($block['Hind'] . " €"); ?>
-              </button>
-            </form>
+            <button type="button" class="category-btn" onclick="configHideShow('cp-id-<?= $block['Id']; ?>')">
+              <?= htmlspecialchars($block['Nimetus']); ?>
+            </button>
           <?php endforeach; ?>
         </div>
+        <?php foreach(model_load_product() as $block): ?>
+          <div id="cp-id-<?= $block['CatId']; ?>" style="display: none">
+            <button type="button" class="product-btn" onclick="addToShoppingCart('<?= htmlspecialchars($block['Nimetus']); ?>', <?= htmlspecialchars($block['Hind']); ?>)">
+              <?= htmlspecialchars($block['Nimetus']); ?>
+              <br>
+              <?= htmlspecialchars($block['Hind'] . " €"); ?>
+            </button>
+          </div>
+        <?php endforeach; ?>
         <!-- Category adding form -->
         <div id="category-add-div">
           <h1 id="adding-title"># Kategooria lisamine</h1>
