@@ -29,15 +29,16 @@ function model_load_catergory() {
 
 function model_load_product() {
   global $l;
-  $query = 'SELECT Id, Nimetus, Kategooria, Hind FROM kaubad ORDER BY Nimetus ASC';
+  $query = 'SELECT Id, Nimetus, Kategooria, Tootekood, Hind FROM kaubad ORDER BY Nimetus ASC';
   $stmt = mysqli_prepare($l, $query);
   mysqli_execute($stmt);
-  mysqli_stmt_bind_result($stmt, $id, $nimetus, $catId, $hind);
+  mysqli_stmt_bind_result($stmt, $id, $nimetus, $catId, $kood, $hind);
   $blocks = array();
   while (mysqli_stmt_fetch($stmt)) {
     $blocks[] = array(
       'Id' => $id,
       'Nimetus' => $nimetus,
+      'Kood' => $kood,
       'CatId' => $catId,
       'Hind' => $hind
     );

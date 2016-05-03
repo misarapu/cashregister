@@ -18,9 +18,10 @@
           <table width="100%">
             <thead>
               <tr style="text-align: left">
-                <th width="50%">Toote nimetus:</th>
+                <th width="30%">Toote nimetus:</th>
+                <th width="25%">Kood:</th>
                 <th width="20%">Kogus:</th>
-                <th width="20%">Hind:</th>
+                <th width="15%">Hind:</th>
                 <th width="10%"></th>
               </tr>
             </thead>
@@ -33,8 +34,12 @@
           <div id="cost-total">0.00 €</div>
         </div>
         <div id="active-button-container">
-          <input type="button" name="buy-button" class="active-button" style="background-color: #99cc00" value="Maksa">
-          <input type="button" name="cancel-button" class="active-button" style="background-color: #ff5c33" value="Tühista">
+          <button type="submit" class="submit-button" name="buy-button">
+            Maksa
+          </button>
+          <button type="button" class="cancel-button">
+            Tühista
+          </button>
         </div>
       </div>
 
@@ -50,8 +55,9 @@
         </div>
         <?php foreach(model_load_product() as $block): ?>
           <div id="cp-id-<?= $block['CatId']; ?>" style="display: none">
-            <button type="button" class="product-btn" onclick="addToShoppingCart('<?= htmlspecialchars($block['Nimetus']); ?>', <?= htmlspecialchars($block['Hind']); ?>)">
+            <button type="button" class="product-btn" onclick="addToShoppingCart('<?= htmlspecialchars($block['Nimetus']); ?>', '<?= htmlspecialchars($block['Kood']); ?>', <?= htmlspecialchars($block['Hind']); ?>)">
               <?= htmlspecialchars($block['Nimetus']); ?>
+              <span style="display: none"><?= htmlspecialchars($block['Kood']); ?></span>
               <br>
               <?= htmlspecialchars($block['Hind'] . " €"); ?>
             </button>
@@ -71,8 +77,12 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <input type="submit" id="category-save-button" name="category-save-button" style="background-color: #99cc00" value="Salvesta">
-                      <input type="button" id="category-cancel-button" style="background-color: #ff5c33" value="Tühista">
+                      <button type="submit" class="submit-button" id="category-submit-button" name="category-submit-button">
+                        Salvesta
+                      </button>
+                      <button type="button" class="cancel-button" id="category-cancel-button">
+                        Tühista
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -117,8 +127,12 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <input type="submit" id="product-save-button" class="input-button" style="background-color: #99cc00" value="Salvesta">
-                      <input type="button" class="input-button" style="background-color: #ff5c33" value="Tühista">
+                      <button type="submit"class="submit-button" id="product-submit-button" value="submit-product">
+                        Salvesta
+                      </button>
+                      <button type="button" class="cancel-button" id="product-cancel-button" value="cancel-product">
+                        Tühista
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -129,11 +143,21 @@
       </div>
 
       <div id="config-button-container">
-        <input type="button" id="home" class="config-button" value="<< Pealeht">
-        <input type="button" id="add-category-page" class="config-button" value="Lisa kategooria">
-        <input type="button" id="add-product-page" class="config-button" value="Lisa toode">
-        <input type="button" id="change-product-page" class="config-button" value="Muuda toodet">
-        <input type="button" id="delete-product" class="config-button" value="Kustuta toode">
+        <button type="button" id="home" class="config-button">
+          << Pealeht
+        </button>
+        <button type="button" id="add-category-page" class="config-button">
+          Lisa kategooria
+        </button>
+        <button type="button" id="add-product-page" class="config-button">
+          Lisa toode
+        </button>
+        <button type="button" id="change-product-page" class="config-button">
+          Muuda toodet
+        </button>
+        <button type="button" id="delete-product" class="config-button">
+          Kustuta toode
+        </button>
       </div>
     </div>
 

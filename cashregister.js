@@ -35,61 +35,81 @@ document.getElementById('add-product-page').addEventListener('click', function(e
   configHideShow('product-add-div');
 });
 
-/*----------------------------------------------------------------------------*/
-/*                  DISPLAYING CATEGORY AND PRODUCT BUTTONS                   */
-/*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*/
 /*                       PRODUCT ACTIONS, FUCTIONS ETC                        */
 /*----------------------------------------------------------------------------*/
+
+function searchFromTableColumn(keyword, tableSelector, colNumber) {
+  var table = document.querySelector(tableSelector);
+  var tr = table.getElementsByTagName('TR');
+  for(var i = 0; i < tr.length; i++) {
+    var td = tr[i].getElementsByTagName('TD');
+    console.log(td[1].textContent);
+    if (td[colNumber].textContent == keyword) {
+      return keyword;
+    } else {
+      return -1;
+    }
+  }
+}
+
 
 /**
  * Shopping cart function
  * @param {name}
  *        {price}
  */
- function addToShoppingCart(name, price) {
+ function addToShoppingCart(name, code, price) {
 
    var tableMain = document.getElementById('order-list');
    var tableBody = document.querySelector('#order-list tbody');
    var totalCostDiv = document.getElementById('cost-total');
    var row = document.createElement('tr');
- 	var nameTd = document.createElement('td');
- 	var quantityTd = document.createElement('td');
+   var nameTd = document.createElement('td');
+   var codeTd = document.createElement('td');
+   var quantityTd = document.createElement('td');
    var priceTd = document.createElement('td');
- 	var deleteTd = document.createElement('td');
+ 	 var deleteTd = document.createElement('td');
    var quantityIn = document.createElement('input')
    var deleteButton = document.createElement('button');
 
    nameTd.textContent = name;
+   codeTd.textContent = code;
    priceTd.textContent = parseFloat(price).toFixed(2);
    priceTd.setAttribute('id', 'row-price');
    priceTd.setAttribute('class', 'row-prices');
    quantityIn.setAttribute('type', 'number');
    quantityIn.setAttribute('min', '1');
    quantityIn.value = '1';
-   deleteButton.textContent = 'X';
-   deleteButton.style.backgroundColor = '#ff5c33';
-   deleteButton.style.fontWeight = 'bold';
+   deleteButton.textContent = 'x';
+   deleteButton.setAttribute('class', 'active-del-btn')
 
    quantityTd.appendChild(quantityIn);
    deleteTd.appendChild(deleteButton);
    row.appendChild(nameTd);
+   row.appendChild(codeTd);
+   row.appendChild(codeTd);
    row.appendChild(quantityTd);
    row.appendChild(priceTd);
    row.appendChild(deleteTd);
    row.style.borderBottom = '1px dashed black';
    tableBody.appendChild(row);
 
+   console.log(searchFromTableColumn(code, '#order-list tbody', 1));
+
+
    var totalCost = parseFloat(totalCostDiv.textContent);
    var rowPrice = document.getElementById('row-price');
    var rowPrices = document.getElementsByClassName('row-prices');
+   totalCost = totalCost + parseFloat(price);
+   totalCostDiv.textContent = totalCost + " €";
 
    quantityIn.addEventListener('change', function(event) {
      priceTd.textContent = parseFloat(Math.round(price * quantityIn.value * 100) / 100).toFixed(2);
    });
 
-   quantityIn.addEventListener('change', function(event) {
+   tableBody.addEventListener('change', function(event) {
      var newTotalCost = 0;
      for (var i = 0; i < rowPrices.length; i++) {
        newTotalCost = newTotalCost + parseFloat(rowPrices[i].textContent);
