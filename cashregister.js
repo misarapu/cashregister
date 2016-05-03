@@ -96,14 +96,11 @@ function searchFromTableColumn(keyword, tableSelector, colNumber) {
    row.style.borderBottom = '1px dashed black';
    tableBody.appendChild(row);
 
-   console.log(searchFromTableColumn(code, '#order-list tbody', 1));
-
-
    var totalCost = parseFloat(totalCostDiv.textContent);
    var rowPrice = document.getElementById('row-price');
    var rowPrices = document.getElementsByClassName('row-prices');
    totalCost = totalCost + parseFloat(price);
-   totalCostDiv.textContent = totalCost + " €";
+   totalCostDiv.textContent = parseFloat(Math.round(totalCost * 100) / 100).toFixed(2) + " €";
 
    quantityIn.addEventListener('change', function(event) {
      priceTd.textContent = parseFloat(Math.round(price * quantityIn.value * 100) / 100).toFixed(2);
@@ -125,5 +122,4 @@ function searchFromTableColumn(keyword, tableSelector, colNumber) {
      }
      totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
    });
-
  }

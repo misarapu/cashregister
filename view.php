@@ -54,19 +54,28 @@
           <?php endforeach; ?>
         </div>
         <?php foreach(model_load_product() as $block): ?>
-          <div id="cp-id-<?= $block['CatId']; ?>" style="display: none">
-            <button type="button" class="product-btn" onclick="addToShoppingCart('<?= htmlspecialchars($block['Nimetus']); ?>', '<?= htmlspecialchars($block['Kood']); ?>', <?= htmlspecialchars($block['Hind']); ?>)">
+          <div class="product-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
+            <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['Id']; ?>" onclick="addToShoppingCart('<?= ($block['Nimetus']); ?>', '<?= ($block['Kood']); ?>', <?= ($block['Hind']); ?>)">
               <?= htmlspecialchars($block['Nimetus']); ?>
               <span style="display: none"><?= htmlspecialchars($block['Kood']); ?></span>
               <br>
               <?= htmlspecialchars($block['Hind'] . " €"); ?>
             </button>
+            <div class="del-edit-container">
+              <button type="button" class="del-product-btn" >x</button>
+              <button type="button" class="edit-product-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>')">e</button>
+            </div>
+          </div>
+          <div id="pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>" style="display: none">
+            <form class="p-edit" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
+              Vorm
+            </form>
           </div>
         <?php endforeach; ?>
         <!-- Category adding form -->
         <div id="category-add-div">
           <h1 id="adding-title"># Kategooria lisamine</h1>
-          <form id="adding-cat-form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
+          <form id="adding-cat-form" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
             <input type="hidden" name="action" value="add-category">
             <table>
               <tbody>
@@ -141,7 +150,6 @@
           </form>
         </div>
       </div>
-
       <div id="config-button-container">
         <button type="button" id="home" class="config-button">
           << Pealeht
