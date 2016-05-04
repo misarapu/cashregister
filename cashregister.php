@@ -21,7 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $product_quantity = $_POST['product-quantity-input'];
       $result = controller_add_product($product_name, $category_id, $product_code, $product_price, $product_quantity);
       break;
-    case 'product-btn':
+    case 'delete-product':
+      $id = intval($_POST['id']);
+      $result = controller_delete_product($id);
+      break;
+    case 'delete-category':
+      $id = intval($_POST['id']);
+      $result = controller_delete_category($id);
       break;
   }
 
@@ -36,3 +42,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 require 'view.php';
+mysqli_close($l);

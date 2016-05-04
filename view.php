@@ -46,15 +46,27 @@
       <!-- Configuration container -->
       <div id="product-category-base" class="product-category-base">
         <!-- Categories and products container -->
+
         <div id="categories-div">
           <?php foreach(model_load_catergory() as $block): ?>
-            <button type="button" class="category-btn" onclick="configHideShow('cp-id-<?= $block['Id']; ?>')">
-              <?= htmlspecialchars($block['Nimetus']); ?>
-            </button>
+            <div class="cp-btn-container" style="display: inline-block";>
+              <button type="button" class="category-btn" onclick="configHideShow('cp-id-<?= $block['Id']; ?>')">
+                <?= htmlspecialchars($block['Nimetus']); ?>
+              </button>
+              <div class="del-edit-container">
+                <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
+                  <input type="hidden" name="action" value="delete-category">
+                  <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+                  <button type="submit" class="del-cp-btn">x</button>
+                </form>
+                <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>')">e</button>
+              </div>
+            </div>
           <?php endforeach; ?>
         </div>
+
         <?php foreach(model_load_product() as $block): ?>
-          <div class="product-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
+          <div class="cp-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
             <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['Id']; ?>" onclick="addToShoppingCart('<?= ($block['Nimetus']); ?>', '<?= ($block['Kood']); ?>', <?= ($block['Hind']); ?>)">
               <?= htmlspecialchars($block['Nimetus']); ?>
               <span style="display: none"><?= htmlspecialchars($block['Kood']); ?></span>
@@ -62,10 +74,15 @@
               <?= htmlspecialchars($block['Hind'] . " €"); ?>
             </button>
             <div class="del-edit-container">
-              <button type="button" class="del-product-btn" >x</button>
-              <button type="button" class="edit-product-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>')">e</button>
+              <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
+                <input type="hidden" name="action" value="delete-product">
+                <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+                <button type="submit" class="del-cp-btn">x</button>
+              </form>
+              <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>')">e</button>
             </div>
           </div>
+
           <div id="pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>" style="display: none">
             <form class="p-edit" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
               Vorm

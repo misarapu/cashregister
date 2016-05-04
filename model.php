@@ -83,3 +83,29 @@ function model_category_id($category_name) {
   mysqli_stmt_close($stmt);
   return $logIds[0];
 }
+
+function model_delete_product($id) {
+  global $l;
+  $query = 'DELETE FROM kaubad WHERE Id=? LIMIT 1';
+  $stmt = mysqli_prepare($l, $query);
+  mysqli_stmt_bind_param($stmt, 'i', $id);
+  mysqli_stmt_execute($stmt);
+  $delete = mysqli_stmt_affected_rows($stmt);
+  mysqli_stmt_close($stmt);
+  return $delete;
+}
+
+function model_delete_category($id) {
+  global $l;
+  $query = 'DELETE kategooriad, kaubad
+            FROM kategooriad
+            INNER JOIN kaubad
+            ON kategooriad.Id = kaubad.Kategooria
+            WHERE kategooriad.Id = ?';
+  $stmt = mysqli_prepare($l, $query);
+  mysqli_stmt_bind_param($stmt, 'i', $id);
+  mysqli_stmt_execute($stmt);
+  $delete = mysqli_stmt_affected_rows($stmt);
+  mysqli_stmt_close($stmt);
+  return $delete;
+}

@@ -206,16 +206,16 @@ button.active-del-btn:hover {
 
 /* Category button */
 .category-btn {
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   font-size: 0.8em;
   background: #CDDC39;
-  width: 81px;
+  width: 66px;
   height: 81px;
   position: relative;
-  float: left;
   word-wrap: break-word;
   overflow: hidden;
-  margin:3px;
   padding: 5px;
 }
 .category-btn:hover {
@@ -223,13 +223,12 @@ button.active-del-btn:hover {
 }
 
 /* Product button container */
-.product-btn-container {
+.cp-btn-container {
   margin: 3px;
   width: 81px;
   display: none;
   float: left;
 }
-
 /* Product button */
 .product-btn {
   border-top-left-radius: 5px;
@@ -252,7 +251,7 @@ button.active-del-btn:hover {
   width: 15px;
   height: 30px;
 }
-.del-product-btn {
+.del-cp-btn {
   border-top-right-radius: 5px;
   background-color: #FF5C33;
   float: left;
@@ -260,7 +259,7 @@ button.active-del-btn:hover {
   height: 15px;
   font-size: 10px;
 }
-.edit-product-btn {
+.edit-cp-btn {
   border-bottom-right-radius: 5px;
   background-color: #CDDC39;
   float: right;
@@ -268,10 +267,10 @@ button.active-del-btn:hover {
   height: 15px;
   font-size: 10px;
 }
-.del-product-btn:hover {
+.del-cp-btn:hover {
   border: 1px groove black;
 }
-.edit-product-btn:hover {
+.edit-cp-btn:hover {
   border: 1px groove black;
 }
 
