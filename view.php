@@ -13,41 +13,54 @@
       <div id="active-container">
         <span id="order-header">Tooted:</span>
 
+
+
         <!-- Active products -->
         <div id="order-list">
-          <table width="100%">
-            <thead>
-              <tr style="text-align: left">
-                <th width="30%">Toote nimetus:</th>
-                <th width="25%">Kood:</th>
-                <th width="20%">Kogus:</th>
-                <th width="15%">Hind:</th>
-                <th width="10%"></th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-        <div id="cost-container">
-          <div id="cost-title">Summa:</div>
-          <div id="cost-total">0.00 €</div>
-        </div>
-        <div id="active-button-container">
-          <button type="submit" class="submit-button" name="buy-button">
-            Maksa
-          </button>
-          <button type="button" class="cancel-button">
-            Tühista
-          </button>
-        </div>
+          <form action="<?= $_SERVER['PHP_SELF'];?>" method="post" name="buy-product">
+            <input type="hidden" name="action" value="buy-product">
+            <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+            <table width="100%">
+              <thead>
+                <tr style="text-align: left">
+                  <th width="34%">Toote nimetus:</th>
+                  <th width="25%">Kood:</th>
+                  <th width="15%">Kogus:</th>
+                  <th width="20%">Hind:</th>
+                  <th width="6%"></th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div id="cost-container">
+            <div id="cost-title">Summa:</div>
+            <div id="cost-total">0.00 €</div>
+          </div>
+          <div id="active-button-container">
+              <button type="submit" class="submit-btn">
+                Maksa
+              </button>
+            <button type="button" id="cancel-order-btn" class="cancel-button">
+              Tühista
+            </button>
+          </div>
+        </form>
       </div>
+
+
 
       <!-- Configuration container -->
       <div id="product-category-base" class="product-category-base">
         <!-- Categories and products container -->
 
         <div id="categories-div">
+          <div class="cp-btn-container" style="display: inline-block">
+            <button type="button" class="add-cp-btn" id="add-category-page" style="background-color: #CDDC39">
+              +
+            </button>
+          </div>
           <?php foreach(model_load_catergory() as $block): ?>
             <div class="cp-btn-container" style="display: inline-block";>
               <button type="button" class="category-btn" onclick="configHideShow('cp-id-<?= $block['Id']; ?>')">
@@ -66,6 +79,11 @@
         </div>
 
         <?php foreach(model_load_product() as $block): ?>
+          <div class="cp-btn-container" id="cp-id-<?= $block['CatId'] ?>">
+            <button type="button" class="add-cp-btn" style="background-color: #00bcd4">
+              +
+            </button>
+          </div>
           <div class="cp-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
             <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['Id']; ?>" onclick="addToShoppingCart('<?= ($block['Nimetus']); ?>', '<?= ($block['Kood']); ?>', <?= ($block['Hind']); ?>)">
               <?= htmlspecialchars($block['Nimetus']); ?>
@@ -103,10 +121,10 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <button type="submit" class="submit-button" id="category-submit-button" name="category-submit-button">
+                      <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn">
                         Salvesta
                       </button>
-                      <button type="button" class="cancel-button" id="category-cancel-button">
+                      <button type="button" class="cancel-button" id="category-cancel-button"  onclick="resetForm('adding-cat-form', 'categories-div')">
                         Tühista
                       </button>
                     </div>
@@ -153,10 +171,10 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <button type="submit"class="submit-button" id="product-submit-button" value="submit-product">
+                      <button type="submit"class="submit-btn" id="product-submit-btn" value="submit-product">
                         Salvesta
                       </button>
-                      <button type="button" class="cancel-button" id="product-cancel-button" value="cancel-product">
+                      <button type="button" class="cancel-button" id="product-cancel-button" onclick="resetForm('adding-protuct-form', 'categories-div')">
                         Tühista
                       </button>
                     </div>
@@ -170,9 +188,6 @@
       <div id="config-button-container">
         <button type="button" id="home" class="config-button">
           << Pealeht
-        </button>
-        <button type="button" id="add-category-page" class="config-button">
-          Lisa kategooria
         </button>
         <button type="button" id="add-product-page" class="config-button">
           Lisa toode

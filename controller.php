@@ -34,3 +34,10 @@ function controller_delete_category($id) {
   }
   return model_delete_category($id);
 }
+
+function controller_buy($id) {
+  if ($id <= 0) {
+    return false;
+  }
+  return model_buy($id);
+}

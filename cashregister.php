@@ -29,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $id = intval($_POST['id']);
       $result = controller_delete_category($id);
       break;
+    case 'buy-product':
+      $id = intval($_POST['id']);
+      $result = controller_buy($id);
+      break;
   }
 
   if ($result) {

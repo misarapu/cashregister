@@ -63,7 +63,7 @@ button {
 #active-container {
   position: relative;
   height: 600px;
-  width: 300px;
+  width: 350px;
   margin-top: 20px;
   padding: 10px;
   background-color: #ffff99;
@@ -110,6 +110,14 @@ button {
   text-align: right;
   padding-right: 5px;
 }
+#order-list input {
+  font-size: 0.84em;
+  width: 80%;
+  border: none;
+}
+#order-list input[type="number"] {
+  text-align: right;
+}
 #order-list button {
   width: 90%;
   text-align: center;
@@ -147,7 +155,7 @@ button.active-del-btn:hover {
 }
 
 /* Buy submit button */
-.submit-button {
+.submit-btn {
   width: 130px;
   font-size: 1.1em;
   padding: 10px;
@@ -156,7 +164,7 @@ button.active-del-btn:hover {
   border: 1px groove black;
 }
 
-.submit-button:hover {
+.submit-btn:hover {
   border: 1px groove white;
 }
 
@@ -243,9 +251,7 @@ button.active-del-btn:hover {
   overflow: hidden;
   padding: 5px;
 }
-.product-btn:hover {
-  border: 1px groove black;
-}
+
 .del-edit-container {
   float: right;
   width: 15px;
@@ -267,12 +273,7 @@ button.active-del-btn:hover {
   height: 15px;
   font-size: 10px;
 }
-.del-cp-btn:hover {
-  border: 1px groove black;
-}
-.edit-cp-btn:hover {
-  border: 1px groove black;
-}
+
 
 div.product-name {
   font-weight: bold;
@@ -283,6 +284,21 @@ div.product-name {
   padding: 0;
 }
 
+.add-cp-btn {
+  border-radius: 5px;
+  font-size: 3em;
+  width: 81px;
+  height: 81px;
+  position: relative;
+  word-wrap: break-word;
+  overflow: hidden;
+  padding: 5px;
+}
+
+
+.product-btn:hover, .del-cp-btn:hover, .edit-cp-btn:hover, .add-cp-btn:hover {
+  border: 1px groove black;
+}
 /* Category and product adding forms */
 #product-category-base th {
   text-align: right;

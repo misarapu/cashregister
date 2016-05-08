@@ -109,3 +109,8 @@ function model_delete_category($id) {
   mysqli_stmt_close($stmt);
   return $delete;
 }
+function model_buy($id) {
+  // kustutab laos ja lisab müüdud tabelisse
+  global $l;
+  model_delete_product($id);
+}
