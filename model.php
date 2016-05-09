@@ -14,13 +14,13 @@ function model_load_catergory() {
   $query = 'SELECT Id, Nimetus FROM kategooriad ORDER BY Nimetus ASC';
   $stmt = mysqli_prepare($l, $query);
   mysqli_execute($stmt);
-  mysqli_stmt_bind_result($stmt, $id, $nimetus);
+  mysqli_stmt_bind_result($stmt, $id, $name);
 
   $blocks = array();
   while (mysqli_stmt_fetch($stmt)) {
     $blocks[] = array(
       'Id' => $id,
-      'Nimetus' => $nimetus
+      'Name' => $name
     );
   }
   mysqli_stmt_close($stmt);
@@ -29,18 +29,23 @@ function model_load_catergory() {
 
 function model_load_product() {
   global $l;
-  $query = 'SELECT Id, Nimetus, Kategooria, Tootekood, Hind FROM kaubad ORDER BY Nimetus ASC';
+  $query = 'SELECT kategooriad.Id, kategooriad.Nimetus, kaubad.Id, kaubad.Nimetus, kaubad.Tootekood, kaubad.Hind, kaubad.Kogus
+    	      FROM kategooriad
+            JOIN kaubad
+            ON kategooriad.Id = kaubad.Kategooria';
   $stmt = mysqli_prepare($l, $query);
   mysqli_execute($stmt);
-  mysqli_stmt_bind_result($stmt, $id, $nimetus, $catId, $kood, $hind);
+  mysqli_stmt_bind_result($stmt, $catId, $catName, $proId, $proName, $proCode, $proPrice, $proQuantity);
   $blocks = array();
   while (mysqli_stmt_fetch($stmt)) {
     $blocks[] = array(
-      'Id' => $id,
-      'Nimetus' => $nimetus,
-      'Kood' => $kood,
       'CatId' => $catId,
-      'Hind' => $hind
+      'CatName' => $catName,
+      'ProId' => $proId,
+      'ProName' => $proName,
+      'ProCode' => $proCode,
+      'ProPrice' => $proPrice,
+      'ProQuantity' => $proQuantity
     );
   }
   mysqli_stmt_close($stmt);

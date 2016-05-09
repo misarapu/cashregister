@@ -20,24 +20,20 @@ function configHideShow(showDivId) {
   }
 }
 
-/*Show homepage*/
-document.getElementById('home').addEventListener('click', function(event) {
-    configHideShow('categories-div');
-});
+
 
 /*Show catecory adding page*/
 document.getElementById('add-category-page').addEventListener('click', function(event) {
   configHideShow('category-add-div');
 });
 
-/*Show product adding page*/
-document.getElementById('add-product-page').addEventListener('click', function(event) {
-  configHideShow('product-add-div');
-});
 
-function addProduct() {
-  configHideShow('add-product-page');
+function addProduct(categoryName) {
+  configHideShow('product-add-div');
+  document.getElementById('category-drop-list').value = categoryName;
 }
+
+
 
 
 /*----------------------------------------------------------------------------*/

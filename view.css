@@ -155,7 +155,7 @@ button.active-del-btn:hover {
 }
 
 /* Buy submit button */
-.submit-btn {
+.submit-btn, .cancel-button {
   width: 130px;
   font-size: 1.1em;
   padding: 10px;
@@ -164,21 +164,7 @@ button.active-del-btn:hover {
   border: 1px groove black;
 }
 
-.submit-btn:hover {
-  border: 1px groove white;
-}
-
-/* Buy cancel button */
-.cancel-button {
-  width: 130px;
-  font-size: 1.1em;
-  padding: 10px;
-  border-radius: 7px;
-  background-color: #FF5C33;
-  border: 1px groove black;
-}
-
-.cancel-button:hover {
+.submit-btn:hover, .cancel-button:hover {
   border: 1px groove white;
 }
 
@@ -213,7 +199,7 @@ button.active-del-btn:hover {
 }
 
 /* Category button */
-.category-btn {
+.category-btn, .product-btn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -236,20 +222,6 @@ button.active-del-btn:hover {
   width: 81px;
   display: none;
   float: left;
-}
-/* Product button */
-.product-btn {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-size: 0.8em;
-  background: #00bcd4;
-  width: 66px;
-  height: 81px;
-  position: relative;
-  word-wrap: break-word;
-  overflow: hidden;
-  padding: 5px;
 }
 
 .del-edit-container {
@@ -310,10 +282,23 @@ div.product-name {
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;
+  height: 50px;
   width: 100%;
   justify-content: space-between;
 }
 
+#small-back {
+  width: 50px;
+  font-size: 1.5em;
+  border: 1px groove black;
+  border-radius: 5px;
+  background-color: #CDDC39;
+  padding: 5px;
+}
+
+#small-back:hover {
+  border: 1px groove white;
+}
 /*----------------------------------------------------------------------------*/
 /*                            CONFIGURATION BUTTONS                           */
 /*----------------------------------------------------------------------------*/

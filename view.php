@@ -6,16 +6,19 @@
     <link rel="stylesheet" type="text/css" href="view.css">
   </head>
   <body>
+
+    <!-- Main container -->
     <div id="container">
+
+      <!-- Title -->
       <div id="container-title">
         # Kassa
       </div>
+      <!-- END title -->
+
+      <!-- Shopping cart -->
       <div id="active-container">
         <span id="order-header">Tooted:</span>
-
-
-
-        <!-- Active products -->
         <div id="order-list">
           <form action="<?= $_SERVER['PHP_SELF'];?>" method="post" name="buy-product">
             <input type="hidden" name="action" value="buy-product">
@@ -39,17 +42,16 @@
             <div id="cost-total">0.00 €</div>
           </div>
           <div id="active-button-container">
-              <button type="submit" class="submit-btn">
-                Maksa
-              </button>
-            <button type="button" id="cancel-order-btn" class="cancel-button">
+            <button type="submit" class="submit-btn" style="background-color: #CDDC39">
+              Maksa
+            </button>
+            <button type="button" id="cancel-order-btn" class="cancel-button" style="background-color: #FF5C33">
               Tühista
             </button>
           </div>
         </form>
       </div>
-
-
+      <!-- END shopping cart-->
 
       <!-- Configuration container -->
       <div id="product-category-base" class="product-category-base">
@@ -63,8 +65,8 @@
           </div>
           <?php foreach(model_load_catergory() as $block): ?>
             <div class="cp-btn-container" style="display: inline-block";>
-              <button type="button" class="category-btn" onclick="configHideShow('cp-id-<?= $block['Id']; ?>')">
-                <?= htmlspecialchars($block['Nimetus']); ?>
+              <button type="button" class="category-btn" style="background-color: #CDDC39" onclick="configHideShow('cp-id-<?= $block['Id']; ?>')">
+                <?= htmlspecialchars($block['Name']); ?>
               </button>
               <div class="del-edit-container">
                 <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
@@ -72,36 +74,44 @@
                   <input type="hidden" name="id" value="<?= $block['Id']; ?>">
                   <button type="submit" class="del-cp-btn">x</button>
                 </form>
-                <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>')">e</button>
+                <button type="button" class="edit-cp-btn">e</button>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
 
-        <?php foreach(model_load_product() as $block): ?>
-          <div class="cp-btn-container" id="cp-id-<?= $block['CatId'] ?>">
-            <button type="button" class="add-cp-btn" style="background-color: #00bcd4">
+        <?php foreach(model_load_catergory() as $block): ?>
+          <div class="cp-btn-container" id="cp-id-<?= $block['Id']; ?>">
+            <button type="button" class="add-cp-btn" style="background-color: #00bcd4" onclick="configHideShow('categories-div')">
+              <
+            </button>
+          </div>
+          <div class="cp-btn-container" id="cp-id-<?= $block['Id'] ?>">
+            <button type="button" class="add-cp-btn" style="background-color: #00bcd4" onclick="addProduct('<?= $block['Name']; ?>')">
               +
             </button>
           </div>
+        <?php endforeach; ?>
+
+          <?php foreach(model_load_product() as $block): ?>
           <div class="cp-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
-            <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['Id']; ?>" onclick="addToShoppingCart('<?= ($block['Nimetus']); ?>', '<?= ($block['Kood']); ?>', <?= ($block['Hind']); ?>)">
-              <?= htmlspecialchars($block['Nimetus']); ?>
-              <span style="display: none"><?= htmlspecialchars($block['Kood']); ?></span>
+            <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['ProId']; ?>" style="background-color: #00bcd4" onclick="addToShoppingCart('<?= ($block['ProName']); ?>', '<?= ($block['ProCode']); ?>', <?= ($block['ProPrice']); ?>)">
+              <?= htmlspecialchars($block['ProName']); ?>
+              <span style="display: none"><?= htmlspecialchars($block['ProCode']); ?></span>
               <br>
-              <?= htmlspecialchars($block['Hind'] . " €"); ?>
+              <?= htmlspecialchars($block['ProPrice'] . " €"); ?>
             </button>
             <div class="del-edit-container">
               <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
                 <input type="hidden" name="action" value="delete-product">
-                <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+                <input type="hidden" name="id" value="<?= $block['ProId']; ?>">
                 <button type="submit" class="del-cp-btn">x</button>
               </form>
-              <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>')">e</button>
+              <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['ProId']; ?>')">e</button>
             </div>
           </div>
 
-          <div id="pe-id-<?= $block['CatId'].'-'.$block['Id']; ?>" style="display: none">
+          <div id="pe-id-<?= $block['CatId'].'-'.$block['ProId']; ?>" style="display: none">
             <form class="p-edit" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
               Vorm
             </form>
@@ -121,10 +131,13 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn">
+                      <button type="button" id="small-back" onclick="configHideShow('categories-div')">
+                        <
+                      </button>
+                      <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn" style="background-color: #CDDC39">
                         Salvesta
                       </button>
-                      <button type="button" class="cancel-button" id="category-cancel-button"  onclick="resetForm('adding-cat-form', 'categories-div')">
+                      <button type="button" class="cancel-button" id="category-cancel-button"  style="background-color: #FF5C33" onclick="resetForm('adding-cat-form', 'categories-div')">
                         Tühista
                       </button>
                     </div>
@@ -151,7 +164,7 @@
                     <select id="category-drop-list" name="category-drop-list" style="width: 204px">
                       <option disabled selected>Vali ...</option>
                       <?php foreach (model_load_catergory() as $block): ?>
-                      <option value="<?= htmlspecialchars($block['Nimetus']); ?>"><?= htmlspecialchars($block['Nimetus']); ?></option>
+                      <option value="<?= htmlspecialchars($block['Name']); ?>"><?= htmlspecialchars($block['Name']); ?></option>
                       <?php endforeach; ?>
                     </select>
                   </td>
@@ -171,10 +184,13 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <button type="submit"class="submit-btn" id="product-submit-btn" value="submit-product">
+                      <button type="button" id="small-back" onclick="configHideShow('categories-div')">
+                        <
+                      </button>
+                      <button type="submit"class="submit-btn" id="product-submit-btn" value="submit-product" style="background-color:#CDDC39">
                         Salvesta
                       </button>
-                      <button type="button" class="cancel-button" id="product-cancel-button" onclick="resetForm('adding-protuct-form', 'categories-div')">
+                      <button type="button" class="cancel-button" id="product-cancel-button" style="background-color:#FF5C33" onclick="resetForm('adding-protuct-form', 'categories-div')">
                         Tühista
                       </button>
                     </div>
@@ -185,23 +201,7 @@
           </form>
         </div>
       </div>
-      <div id="config-button-container">
-        <button type="button" id="home" class="config-button">
-          << Pealeht
-        </button>
-        <button type="button" id="add-product-page" class="config-button">
-          Lisa toode
-        </button>
-        <button type="button" id="change-product-page" class="config-button">
-          Muuda toodet
-        </button>
-        <button type="button" id="delete-product" class="config-button">
-          Kustuta toode
-        </button>
-      </div>
     </div>
-
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> -->
     <script type="text/javascript" src="cashregister.js"></script>
   </body>
 </html>
