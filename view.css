@@ -2,6 +2,11 @@
 /*                                 BASICS                                     */
 /*----------------------------------------------------------------------------*/
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
@@ -15,18 +20,24 @@ th {
   font-weight: bold;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 button {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   border: none;
   outline: none;
 }
 
-#container {
+.logo-img {
+  width: 60%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/*----------------------------------------------------------------------------*/
+/*                             MAIN-CONTAINER                                 */
+/*----------------------------------------------------------------------------*/
+
+/* Main container */
+#main-container {
   position: relative;
   height: 700px;
   width: 1200px;
@@ -37,7 +48,8 @@ button {
   padding: 10px 10px 25px 10px;
 }
 
-#container-title {
+/* Main container title */
+#main-container-title {
   font-family: Arial, sans-serif;
   height: auto;
   width: auto;
@@ -50,7 +62,7 @@ button {
 /*                          SHOPPING CART CONTAINER                           */
 /*----------------------------------------------------------------------------*/
 
-/* Shopping card title */
+/* Shopping cart itle */
 #order-header {
   font-size: 24px;
   color: black;
@@ -59,7 +71,7 @@ button {
   display: block;
 }
 
-/* Main container */
+/* Shopping cart container */
 #active-container {
   position: relative;
   height: 600px;
@@ -70,7 +82,7 @@ button {
   float: left;
 }
 
-/* Table div */
+/* Shopping cart table div */
 #order-list {
   height: 400px;
   width: auto;
@@ -80,6 +92,7 @@ button {
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
 /* Shopping cart table */
 #order-list table {
   border-spacing: 0px;
@@ -123,18 +136,17 @@ button {
   text-align: center;
 }
 
-/* Delete button small */
+/* Shopping cart delete button small */
 button.active-del-btn {
   background-color: #ff5c33;
   border: 1px groove black;
   border-radius: 3px;
 }
-
 button.active-del-btn:hover {
   border: 1px groove white;
 }
 
-/* Total cost */
+/* Shopping cart total cost */
 #cost-container {
   display: flex;
   font-size: 24px;
@@ -147,14 +159,12 @@ button.active-del-btn:hover {
   width: 100%;
 }
 
-/* Pay and cancel buttons */
+/* Shopping cart pay and cancel buttons */
 #active-button-container {
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
-
-/* Buy submit button */
 .submit-btn, .cancel-button {
   width: 130px;
   font-size: 1.1em;
@@ -163,13 +173,12 @@ button.active-del-btn:hover {
   background-color: #CDDC39;
   border: 1px groove black;
 }
-
 .submit-btn:hover, .cancel-button:hover {
   border: 1px groove white;
 }
 
 /*----------------------------------------------------------------------------*/
-/*                PRODUCTS, CATEGORIES AND CONFIGURE BUTTONS                  */
+/*                   PRODUCTS AND CATEGORIES CONTAINERS                       */
 /*----------------------------------------------------------------------------*/
 
 /* Products and categories base container */
@@ -184,7 +193,7 @@ button.active-del-btn:hover {
   overflow-x: hidden;
 }
 
-/* Initial displays of pages */
+/* Initial displays of category and prodtuct containers */
 #category-div {
   display: block;
 }
@@ -197,8 +206,34 @@ button.active-del-btn:hover {
 #product-add-div {
   display: none;
 }
+.c-edit-container {
+  display: none;
+}
 
-/* Category button */
+/* Category and product adding and editing forms */
+#product-category-base th {
+  text-align: right;
+}
+#category-add-div, #product-add-div, .c-edit-container {
+  margin: 25px;
+  width: 700px;
+}
+#category-add-div h1, #product-add-div h1, .c-edit-container h1 {
+  margin-bottom: 50px;
+}
+/*----------------------------------------------------------------------------*/
+/*                    PRODUCTS AND CATEGORIES BUTTONS                         */
+/*----------------------------------------------------------------------------*/
+
+/* Category and product single container */
+.cp-btn-container {
+  margin: 3px;
+  width: 81px;
+  display: none;
+  float: left;
+}
+
+/* Category and product button */
 .category-btn, .product-btn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -212,23 +247,25 @@ button.active-del-btn:hover {
   overflow: hidden;
   padding: 5px;
 }
-.category-btn:hover {
-  border: 1px groove black;
+
+/* Product button title */
+.product-name {
+  font-weight: bold;
+  word-wrap: break-word;
+  height: 35px;
+  text-align: center;
+  overflow: hidden;
+  padding: 0;
 }
 
-/* Product button container */
-.cp-btn-container {
-  margin: 3px;
-  width: 81px;
-  display: none;
-  float: left;
-}
-
+/* Category and product delete-edit container */
 .del-edit-container {
   float: right;
   width: 15px;
   height: 30px;
 }
+
+/* Category and product delete button */
 .del-cp-btn {
   border-top-right-radius: 5px;
   background-color: #FF5C33;
@@ -237,6 +274,8 @@ button.active-del-btn:hover {
   height: 15px;
   font-size: 10px;
 }
+
+/* Category and product edit button */
 .edit-cp-btn {
   border-bottom-right-radius: 5px;
   background-color: #CDDC39;
@@ -246,16 +285,7 @@ button.active-del-btn:hover {
   font-size: 10px;
 }
 
-
-div.product-name {
-  font-weight: bold;
-  word-wrap: break-word;
-  height: 35px;
-  text-align: center;
-  overflow: hidden;
-  padding: 0;
-}
-
+/* Category and product add button */
 .add-cp-btn {
   border-radius: 5px;
   font-size: 3em;
@@ -264,30 +294,32 @@ div.product-name {
   position: relative;
   word-wrap: break-word;
   overflow: hidden;
-  padding: 5px;
+}
+.add-cp-btn img {
+  padding: 20px, 20px, 20px, 20px;
 }
 
-
+/* Category and product main button, delete button and edit button hover */
 .product-btn:hover, .del-cp-btn:hover, .edit-cp-btn:hover, .add-cp-btn:hover {
   border: 1px groove black;
 }
-/* Category and product adding forms */
-#product-category-base th {
-  text-align: right;
-}
-#category-add-div, #product-add-div {
-  margin: 25px;
-}
+
+/*----------------------------------------------------------------------------*/
+/*                          SAVE-CANCEl-BACK BUTTONS                          */
+/*----------------------------------------------------------------------------*/
+
+/* Save-cancel-back button container */
 .input-button-container {
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 20px;
   display: flex;
   height: 50px;
-  width: 100%;
+  width: 350px;
   justify-content: space-between;
 }
 
-#small-back {
+/* Save-cancel-back button container */
+#small-menu-btn {
   width: 50px;
   font-size: 1.5em;
   border: 1px groove black;
@@ -295,8 +327,7 @@ div.product-name {
   background-color: #CDDC39;
   padding: 5px;
 }
-
-#small-back:hover {
+#small-menu-btn:hover {
   border: 1px groove white;
 }
 /*----------------------------------------------------------------------------*/
@@ -304,25 +335,10 @@ div.product-name {
 /*----------------------------------------------------------------------------*/
 
 /* Configuration buttons container */
-#config-button-container {
+#menu-btn-container {
   display: flex;
   float: right;
   width: 800px;
   margin-top: 20px;
-  height: 40px;
   justify-content: space-between;
-}
-
-/* Configuration buttons */
-.config-button {
-  width: 150px;
-  height: 40px;
-  font-size: 1.1em;
-  border: 1px groove black;
-  border-radius: 5px;
-  background-color: powderblue;
-}
-
-.config-button:hover {
-  border: 1px groove white;
 }

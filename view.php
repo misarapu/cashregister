@@ -8,13 +8,13 @@
   <body>
 
     <!-- Main container -->
-    <div id="container">
+    <div id="main-container">
 
-      <!-- Title -->
-      <div id="container-title">
+      <!-- Main title -->
+      <div id="main-container-title">
         # Kassa
       </div>
-      <!-- END title -->
+      <!-- END main title -->
 
       <!-- Shopping cart -->
       <div id="active-container">
@@ -53,14 +53,15 @@
       </div>
       <!-- END shopping cart-->
 
-      <!-- Configuration container -->
+      <!-- Category-product button main container -->
       <div id="product-category-base" class="product-category-base">
         <!-- Categories and products container -->
 
+        <!-- Category button main div -->
         <div id="categories-div">
           <div class="cp-btn-container" style="display: inline-block">
             <button type="button" class="add-cp-btn" id="add-category-page" style="background-color: #CDDC39">
-              +
+              <img class="logo-img" src="Plus-64.png" alt="Add Logo"/>
             </button>
           </div>
           <?php foreach(model_load_catergory() as $block): ?>
@@ -74,25 +75,63 @@
                   <input type="hidden" name="id" value="<?= $block['Id']; ?>">
                   <button type="submit" class="del-cp-btn">x</button>
                 </form>
-                <button type="button" class="edit-cp-btn">e</button>
+                <button type="button" class="edit-cp-btn" onclick="configHideShow('c-edit-<?= $block['Id']; ?>')">e</button>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
+        <!-- END category button main div -->
 
+        <!-- Category edit divs -->
+        <?php foreach(model_load_catergory() as $block): ?>
+          <div class="c-edit-container" id="c-edit-<?= $block['Id']; ?>">
+            <h1 id="adding-title"># Kategooria <?= $block['Name']; ?> muutmine</h1>
+            <form id="editing-cat-form" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
+              <input type="hidden" name="action" value="edit-category">
+              <table>
+                <tbody>
+                  <tr>
+                    <th id="row-title">Uus nimetus:</th>
+                    <td><input type="text" id="category-input" name="new-c-name" style="width: 200px"></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <div class="input-button-container">
+                        <button type="button" id="small-menu-btn" onclick="configHideShow('categories-div')">
+                          <img class="logo-img" src="Back-64.png" alt="Back Logo" />
+                        </button>
+                        <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn" style="background-color: #CDDC39">
+                          Salvesta
+                        </button>
+                        <button type="button" class="cancel-button" id="category-cancel-button"  style="background-color: #FF5C33" onclick="resetForm('editing-cat-form', 'c-edit-<?= $block['Id']; ?>')">
+                          Tühista
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        <?php endforeach; ?>
+        <!-- END category edit divs -->
+
+        <!-- From product divs back to category main div -->
         <?php foreach(model_load_catergory() as $block): ?>
           <div class="cp-btn-container" id="cp-id-<?= $block['Id']; ?>">
             <button type="button" class="add-cp-btn" style="background-color: #00bcd4" onclick="configHideShow('categories-div')">
-              <
+              <img class="logo-img" src="Back-64.png" alt="Back Logo" />
             </button>
           </div>
           <div class="cp-btn-container" id="cp-id-<?= $block['Id'] ?>">
             <button type="button" class="add-cp-btn" style="background-color: #00bcd4" onclick="addProduct('<?= $block['Name']; ?>')">
-              +
+              <img class="logo-img" src="Plus-64.png" alt="Add Logo" />
             </button>
           </div>
         <?php endforeach; ?>
+        <!-- END from product divs back to category main div -->
 
+          <!-- Products buttons -->
           <?php foreach(model_load_product() as $block): ?>
           <div class="cp-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
             <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['ProId']; ?>" style="background-color: #00bcd4" onclick="addToShoppingCart('<?= ($block['ProName']); ?>', '<?= ($block['ProCode']); ?>', <?= ($block['ProPrice']); ?>)">
@@ -110,13 +149,14 @@
               <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['ProId']; ?>')">e</button>
             </div>
           </div>
-
           <div id="pe-id-<?= $block['CatId'].'-'.$block['ProId']; ?>" style="display: none">
             <form class="p-edit" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
               Vorm
             </form>
           </div>
         <?php endforeach; ?>
+        <!-- END products buttons -->
+
         <!-- Category adding form -->
         <div id="category-add-div">
           <h1 id="adding-title"># Kategooria lisamine</h1>
@@ -131,8 +171,8 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <button type="button" id="small-back" onclick="configHideShow('categories-div')">
-                        <
+                      <button type="button" id="small-menu-btn" onclick="configHideShow('categories-div')">
+                        <img class="logo-img" src="Back-64.png" alt="Back Logo" />
                       </button>
                       <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn" style="background-color: #CDDC39">
                         Salvesta
@@ -147,6 +187,8 @@
             </table>
           </form>
         </div>
+        <!-- END category adding form -->
+
         <!-- Product adding form -->
         <div id="product-add-div">
           <h1 id="adding-title"># Toote lisamine</h1>
@@ -184,7 +226,7 @@
                 <tr>
                   <td colspan="2">
                     <div class="input-button-container">
-                      <button type="button" id="small-back" onclick="configHideShow('categories-div')">
+                      <button type="button" id="small-menu-btn" onclick="configHideShow('categories-div')">
                         <
                       </button>
                       <button type="submit"class="submit-btn" id="product-submit-btn" value="submit-product" style="background-color:#CDDC39">
@@ -200,8 +242,37 @@
             </table>
           </form>
         </div>
+        <!-- END product adding form -->
       </div>
+      <!-- END Category-product button main container -->
+
+      <!-- Menu buttons -->
+      <div id="menu-btn-container">
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          <img class="logo-img" src="Home-64.png" alt="Home Logo"/>
+        </button>
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          <img class="logo-img" src="Search-64.png" alt="Search Logo"/>
+        </button>
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          <img class="logo-img" src="Database-64.png" alt="Search Logo"/>
+        </button>
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          <img class="logo-img" src="Settings-64.png" alt="Search Logo"/>
+        </button>
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          #
+        </button>
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          #
+        </button>
+        <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+          #
+        </button>
+      </div>
+      <!-- END menu buttons -->
     </div>
+    <!-- END main container -->
     <script type="text/javascript" src="cashregister.js"></script>
   </body>
 </html>

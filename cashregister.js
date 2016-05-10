@@ -1,8 +1,18 @@
 'use strict';
 
 /*----------------------------------------------------------------------------*/
-/*                              DISPLAYING MAIN DIVS                          */
+/*                              DISPLAYING DIVS                               */
 /*----------------------------------------------------------------------------*/
+
+/*Show catecory adding page*/
+document.getElementById('add-category-page').addEventListener('click', function(event) {
+  configHideShow('category-add-div');
+});
+
+function addProduct(categoryName) {
+  configHideShow('product-add-div');
+  document.getElementById('category-drop-list').value = categoryName;
+}
 
 /**
  * Configuration buttons displaying function
@@ -20,24 +30,8 @@ function configHideShow(showDivId) {
   }
 }
 
-
-
-/*Show catecory adding page*/
-document.getElementById('add-category-page').addEventListener('click', function(event) {
-  configHideShow('category-add-div');
-});
-
-
-function addProduct(categoryName) {
-  configHideShow('product-add-div');
-  document.getElementById('category-drop-list').value = categoryName;
-}
-
-
-
-
 /*----------------------------------------------------------------------------*/
-/*                       PRODUCT ACTIONS, FUCTIONS ETC                        */
+/*                              SHOPPING CART                                 */
 /*----------------------------------------------------------------------------*/
 
 /**
