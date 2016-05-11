@@ -165,7 +165,7 @@ button.active-del-btn:hover {
   width: 100%;
   justify-content: space-between;
 }
-.submit-btn, .cancel-button {
+.submit-btn, .cancel-btn {
   width: 130px;
   font-size: 1.1em;
   padding: 10px;
@@ -173,7 +173,7 @@ button.active-del-btn:hover {
   background-color: #CDDC39;
   border: 1px groove black;
 }
-.submit-btn:hover, .cancel-button:hover {
+.submit-btn:hover, .cancel-btn:hover {
   border: 1px groove white;
 }
 
@@ -197,16 +197,7 @@ button.active-del-btn:hover {
 #category-div {
   display: block;
 }
-#product-div {
-  display: none;
-}
-#category-add-div {
-  display: none;
-}
-#product-add-div {
-  display: none;
-}
-.c-edit-container {
+#product-div, #category-add-div, #product-add-div, #category-edit-div, #product-edit-div {
   display: none;
 }
 
@@ -214,11 +205,11 @@ button.active-del-btn:hover {
 #product-category-base th {
   text-align: right;
 }
-#category-add-div, #product-add-div, .c-edit-container {
+#category-add-div, #product-add-div, #category-edit-div, #product-edit-div {
   margin: 25px;
   width: 700px;
 }
-#category-add-div h1, #product-add-div h1, .c-edit-container h1 {
+#category-add-div h1, #product-add-div h1, #category-edit-div h1, #product-edit-div h1 {
   margin-bottom: 50px;
 }
 /*----------------------------------------------------------------------------*/
@@ -300,7 +291,7 @@ button.active-del-btn:hover {
 }
 
 /* Category and product main button, delete button and edit button hover */
-.product-btn:hover, .del-cp-btn:hover, .edit-cp-btn:hover, .add-cp-btn:hover {
+.category-btn:hover, .product-btn:hover, .del-cp-btn:hover, .edit-cp-btn:hover, .add-cp-btn:hover {
   border: 1px groove black;
 }
 

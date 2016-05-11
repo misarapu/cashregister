@@ -29,6 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $id = intval($_POST['id']);
       $result = controller_delete_product($id);
       break;
+    case 'edit-category':
+      $old_category_name = $_POST['old-c-name'];
+      $new_category_name = $_POST['new-c-name'];
+      $return = controller_edit_category($old_category_name, $new_category_name);
+      break;
+    case 'edit-product':
+      $old_code = $_POST['old-p-code'];
+      $new_product_name = $_POST['new-p-name'];
+      $new_category_name = intval(controller_category_id($_POST['new-p-category']));
+      $new_code = $_POST['new-p-code'];
+      $new_quantity = intval($_POST['new-p-quantity']);
+      $new_price = $_POST['new-p-price'];
+      $return = controller_edit_product($old_code, $new_product_name, $new_category_name, $new_code, $new_quantity, $new_price);
+      break;
     case 'buy-product':
       $id = intval($_POST['id']);
       $result = controller_buy($id);

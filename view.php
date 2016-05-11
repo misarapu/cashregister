@@ -45,7 +45,7 @@
             <button type="submit" class="submit-btn" style="background-color: #CDDC39">
               Maksa
             </button>
-            <button type="button" id="cancel-order-btn" class="cancel-button" style="background-color: #FF5C33">
+            <button type="button" id="cancel-order-btn" class="cancel-btn" style="background-color: #FF5C33">
               Tühista
             </button>
           </div>
@@ -75,46 +75,12 @@
                   <input type="hidden" name="id" value="<?= $block['Id']; ?>">
                   <button type="submit" class="del-cp-btn">x</button>
                 </form>
-                <button type="button" class="edit-cp-btn" onclick="configHideShow('c-edit-<?= $block['Id']; ?>')">e</button>
+                <button type="button" class="edit-cp-btn" onclick="showCategoryEdit('<?= $block['Name']; ?>', '<?= $_SERVER['PHP_SELF']; ?>')">e</button>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
         <!-- END category button main div -->
-
-        <!-- Category edit divs -->
-        <?php foreach(model_load_catergory() as $block): ?>
-          <div class="c-edit-container" id="c-edit-<?= $block['Id']; ?>">
-            <h1 id="adding-title"># Kategooria <?= $block['Name']; ?> muutmine</h1>
-            <form id="editing-cat-form" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
-              <input type="hidden" name="action" value="edit-category">
-              <table>
-                <tbody>
-                  <tr>
-                    <th id="row-title">Uus nimetus:</th>
-                    <td><input type="text" id="category-input" name="new-c-name" style="width: 200px"></td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <div class="input-button-container">
-                        <button type="button" id="small-menu-btn" onclick="configHideShow('categories-div')">
-                          <img class="logo-img" src="Back-64.png" alt="Back Logo" />
-                        </button>
-                        <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn" style="background-color: #CDDC39">
-                          Salvesta
-                        </button>
-                        <button type="button" class="cancel-button" id="category-cancel-button"  style="background-color: #FF5C33" onclick="resetForm('editing-cat-form', 'c-edit-<?= $block['Id']; ?>')">
-                          Tühista
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
-          </div>
-        <?php endforeach; ?>
-        <!-- END category edit divs -->
 
         <!-- From product divs back to category main div -->
         <?php foreach(model_load_catergory() as $block): ?>
@@ -146,7 +112,7 @@
                 <input type="hidden" name="id" value="<?= $block['ProId']; ?>">
                 <button type="submit" class="del-cp-btn">x</button>
               </form>
-              <button type="button" class="edit-cp-btn" onclick="configHideShow('pe-id-<?= $block['CatId'].'-'.$block['ProId']; ?>')">e</button>
+              <button type="button" class="edit-cp-btn" onclick="showProductEdit('<?= $block['ProName']; ?>', '<?= $block['CatName']; ?>', '<?= $block['ProCode']; ?>', '<?= $block['ProQuantity']; ?>', '<?= $block['ProPrice']; ?>', '<?= $_SERVER['PHP_SELF']; ?>')">e</button>
             </div>
           </div>
           <div id="pe-id-<?= $block['CatId'].'-'.$block['ProId']; ?>" style="display: none">
@@ -177,7 +143,7 @@
                       <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn" style="background-color: #CDDC39">
                         Salvesta
                       </button>
-                      <button type="button" class="cancel-button" id="category-cancel-button"  style="background-color: #FF5C33" onclick="resetForm('adding-cat-form', 'categories-div')">
+                      <button type="button" class="cancel-btn" id="category-cancel-btn"  style="background-color: #FF5C33" onclick="resetForm('adding-cat-form', 'categories-div')">
                         Tühista
                       </button>
                     </div>
@@ -204,9 +170,9 @@
                   <th>Toote kategooria:</th>
                   <td>
                     <select id="category-drop-list" name="category-drop-list" style="width: 204px">
-                      <option disabled selected>Vali ...</option>
+                      <option class="category-option" disabled selected>Vali ...</option>
                       <?php foreach (model_load_catergory() as $block): ?>
-                      <option value="<?= htmlspecialchars($block['Name']); ?>"><?= htmlspecialchars($block['Name']); ?></option>
+                      <option class="category-option" value="<?= htmlspecialchars($block['Name']); ?>"><?= htmlspecialchars($block['Name']); ?></option>
                       <?php endforeach; ?>
                     </select>
                   </td>
@@ -229,10 +195,10 @@
                       <button type="button" id="small-menu-btn" onclick="configHideShow('categories-div')">
                         <
                       </button>
-                      <button type="submit"class="submit-btn" id="product-submit-btn" value="submit-product" style="background-color:#CDDC39">
+                      <button type="submit" class="submit-btn" id="product-submit-btn" value="submit-product" style="background-color:#CDDC39">
                         Salvesta
                       </button>
-                      <button type="button" class="cancel-button" id="product-cancel-button" style="background-color:#FF5C33" onclick="resetForm('adding-protuct-form', 'categories-div')">
+                      <button type="button" class="cancel-btn" id="product-cancel-btn" style="background-color:#FF5C33" onclick="resetForm('adding-protuct-form', 'categories-div')">
                         Tühista
                       </button>
                     </div>
@@ -244,7 +210,7 @@
         </div>
         <!-- END product adding form -->
       </div>
-      <!-- END Category-product button main container -->
+      <!-- END category-product button main container -->
 
       <!-- Menu buttons -->
       <div id="menu-btn-container">
@@ -255,7 +221,7 @@
           <img class="logo-img" src="Search-64.png" alt="Search Logo"/>
         </button>
         <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-          <img class="logo-img" src="Database-64.png" alt="Search Logo"/>
+          <img class="logo-img" src="Database-64.png" alt="Database Logo"/>
         </button>
         <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
           <img class="logo-img" src="Settings-64.png" alt="Search Logo"/>
@@ -267,7 +233,7 @@
           #
         </button>
         <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-          #
+          <img class="logo-img" src="Logout_Rounded-64.png" alt="Logout Logo"/>
         </button>
       </div>
       <!-- END menu buttons -->
