@@ -321,10 +321,11 @@ function addToShoppingCart(name, code, price, quantity) {
     /* Creating shopping cart elements */
 
     // Get elements
-    var tableMain = document.getElementById('order-list');
+    var tableMain = document.querySelector('#order-list table');
     var tableBody = document.querySelector('#order-list tbody');
     var totalCostDiv = document.getElementById('cost-total');
     var cancelButton = document.getElementById('cancel-order-btn');
+
     // Create elements
     var row = document.createElement('tr');
     var nameTd = document.createElement('td');
@@ -338,12 +339,6 @@ function addToShoppingCart(name, code, price, quantity) {
     var priceIn = document.createElement('input');
     var deleteButton = document.createElement('button');
     var inputHidden = document.createElement('input');
-    /* Checking duplications */
-
-
-
-
-
 
     // Set values, attributes and style
     nameIn.value = name;
@@ -353,7 +348,6 @@ function addToShoppingCart(name, code, price, quantity) {
     codeIn.readOnly = true;
     codeIn.setAttribute('type', 'text');
     codeIn.setAttribute('class', 'row-codes');
-    //quantityIn.value = 1;
     quantityIn.setAttribute('min', '1');
     quantityIn.setAttribute('max', quantity);
     quantityIn.setAttribute('type', 'number');
@@ -369,7 +363,9 @@ function addToShoppingCart(name, code, price, quantity) {
     row.style.borderBottom = '1px dashed black';
     inputHidden.setAttribute('type', 'hidden');
     inputHidden.setAttribute('name', 'product[]');
+    inputHidden.setAttribute('class', 'hidden-product-input');
 
+    // Bind elements
     row.appendChild(nameTd);
     row.appendChild(codeTd);
     row.appendChild(quantityTd);
@@ -382,82 +378,86 @@ function addToShoppingCart(name, code, price, quantity) {
     deleteTd.appendChild(deleteButton);
     row.appendChild(inputHidden);
 
+    /* Adding row to table */
+
+    // Get elements
     var rowSingles = tableBody.getElementsByTagName('tr');
-    var rowQuantities = tableBody.getElementsByClassName('row-quantities');
     var rowCodes = tableBody.getElementsByClassName('row-codes');
-    if (tableBody.getElementsByClassName('row-codes').length == 0) {
+    var rowQuantities = tableBody.getElementsByClassName('row-quantities');
+    var rowPrices = document.getElementsByClassName('row-prices');
+    var inputHiddens = tableBody.getElementsByClassName('hidden-product-input');
+    if (rowCodes.length == 0) {
         quantityIn.value = 1;
+        tableBody.appendChild(row);
+        inputHidden.setAttribute('value', code + ':' + '1');
         tableBody.appendChild(row);
     } else {
         var codeMatchCounter = 0;
         for (var i = 0; i < rowCodes.length; i++) {
-            if(rowCodes[i].value == code) {
+            if (rowCodes[i].value == code) {
                 codeMatchCounter += 1;
                 var rowCols = rowSingles[i].getElementsByTagName('td');
                 rowCols[2].firstChild.value = parseInt(rowCols[2].firstChild.value) + 1;
-                console.log(codeMatchCounter);
+                inputHiddens[i].setAttribute('value', code + ":" + rowCols[2].firstChild.value);
+                if (rowQuantities[i].value >= quantity) {
+                    rowQuantities[i].value = quantity;
+                    alert("Toote '" + name + "' kogus laos on " + quantity + "!");
+                }
             }
         }
         if (codeMatchCounter == 0) {
             quantityIn.value = 1;
             tableBody.appendChild(row);
+            inputHidden.setAttribute('value', code + ':' + '1');
         }
     }
 
-
-
-
-    inputHidden.setAttribute('value', code + ':' + quantityIn.value);
-    // Bind elements
-
-    /* Checking duplications */
-
-
+    /* Quantity control */
+    quantityIn.addEventListener('change', function(event) {
+        if (quantityIn.value > quantity) {
+            quantityIn.value = quantity;
+            alert("Toodet " + name + " on laos " + quantity) + ".";
+        }
+    });
 
     /* Calculating total cost */
 
-    // Creating elements
-    var rowPrice = document.getElementById('row-price');
-    var rowPrices = document.getElementsByClassName('row-prices');
-    // Initial total price
-    var totalCost = parseFloat(totalCostDiv.textContent);
-    totalCost = totalCost + parseFloat(price);
-    totalCostDiv.textContent = parseFloat(Math.round(totalCost * 100) / 100).toFixed(2) + " €";
-    // Quantity change listener - calculating row total price
-    quantityIn.addEventListener('change', function(event) {
-        priceIn.value = parseFloat(Math.round(price * quantityIn.value * 100) / 100).toFixed(2);
-        inputHidden.setAttribute('value', code + ':' + quantityIn.value);
-    });
-    // Table change listenet - calculating present total cost
-    tableBody.addEventListener('change', function(event) {
+    if (rowSingles.length == 0) {
+        totalCostDiv.textContent = (0).toFixed(2) + " €";
+    }
+
+    tableMain.addEventListener('change', function(event) {
         var newTotalCost = 0;
         for (var i = 0; i < rowPrices.length; i++) {
-            newTotalCost = newTotalCost + parseFloat(rowPrices[i].value);
+            newTotalCost = newTotalCost + parseInt(rowQuantities[i].value) * parseFloat(rowPrices[i].value);
         }
         totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
     });
-
-    /* Row delete button */
-
-    deleteButton.addEventListener('click', function(event) {
-        row.parentNode.removeChild(row);
-        var newTotalCost = 0;
-        for (var i = 0; i < rowPrices.length; i++) {
-            newTotalCost = newTotalCost + parseFloat(rowPrices[i].value);
-        }
-        totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
-    });
-
-    /* Cancel order */
 
     cancelButton.addEventListener('click', function(event) {
-        var i = tableBody.rows.length;
         for(var i = 0; i < tableBody.rows.length; i++) {
             tableBody.deleteRow(i);
         }
         totalCostDiv.textContent = "0.00 €";
     });
+
+    /* Row delete button */
+    deleteButton.addEventListener('click', function(event) {
+        row.parentNode.removeChild(row);
+        var newTotalCost = 0;
+        for (var i = 0; i < rowPrices.length; i++) {
+            newTotalCost = newTotalCost + parseInt(rowQuantities[i].value) * parseFloat(rowPrices[i].value);
+        }
+        totalCostDiv.textContent = parseFloat(newTotalCost).toFixed(2) + ' €';
+    });
+
+
 }
+
+
+
+
+
 
  /**
     * Resetting form fields

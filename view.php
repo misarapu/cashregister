@@ -97,14 +97,14 @@
                 <?php endforeach; ?>
                 <!-- END from product divs back to category main div -->
 
-                    <!-- Products buttons -->
+                <!-- Products buttons -->
                 <?php foreach(model_load_product() as $block): ?>
                     <div class="cp-btn-container" id="cp-id-<?= $block['CatId']; ?>" >
                         <button type="button" class="product-btn" id="pb-id-<?= $block['CatId'].'-'.$block['ProId']; ?>" style="background-color: #00bcd4" onclick="addToShoppingCart('<?= $block['ProName']; ?>', '<?= $block['ProCode']; ?>', <?= $block['ProPrice']; ?>, <?= $block['ProQuantity']; ?>)">
                             <?= htmlspecialchars($block['ProName']); ?>
                             <span style="display: none"><?= htmlspecialchars($block['ProCode']); ?></span>
                             <br>
-                            <?= htmlspecialchars($block['ProPrice'] . " €"); ?>
+                            <?= htmlspecialchars(number_format((float)$block['ProPrice'], 2, '.', '') . " €"); ?>
                         </button>
                         <div class="del-edit-container">
                             <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
