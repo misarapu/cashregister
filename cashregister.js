@@ -338,19 +338,27 @@ function addToShoppingCart(name, code, price, quantity) {
     var priceIn = document.createElement('input');
     var deleteButton = document.createElement('button');
     var inputHidden = document.createElement('input');
+    /* Checking duplications */
+
+
+
+
+
+
     // Set values, attributes and style
     nameIn.value = name;
-    codeIn.setAttribute('class', 'row-code');
-    codeIn.value = code;
-    quantityIn.value = '1';
-    priceIn.value = parseFloat(price).toFixed(2);
     nameIn.setAttribute('type', 'text');
     nameIn.readOnly = true;
-    codeIn.setAttribute('type', 'text');
+    codeIn.value = code;
     codeIn.readOnly = true;
+    codeIn.setAttribute('type', 'text');
+    codeIn.setAttribute('class', 'row-codes');
+    //quantityIn.value = 1;
     quantityIn.setAttribute('min', '1');
     quantityIn.setAttribute('max', quantity);
     quantityIn.setAttribute('type', 'number');
+    quantityIn.setAttribute('class', 'row-quantities');
+    priceIn.value = parseFloat(price).toFixed(2);
     priceIn.setAttribute('class', 'row-prices');
     priceIn.setAttribute('id', 'row-price');
     priceIn.setAttribute('type', 'number');
@@ -361,8 +369,7 @@ function addToShoppingCart(name, code, price, quantity) {
     row.style.borderBottom = '1px dashed black';
     inputHidden.setAttribute('type', 'hidden');
     inputHidden.setAttribute('name', 'product[]');
-    // Bind elements
-    tableBody.appendChild(row);
+
     row.appendChild(nameTd);
     row.appendChild(codeTd);
     row.appendChild(quantityTd);
@@ -374,19 +381,38 @@ function addToShoppingCart(name, code, price, quantity) {
     priceTd.appendChild(priceIn);
     deleteTd.appendChild(deleteButton);
     row.appendChild(inputHidden);
+
+    var rowSingles = tableBody.getElementsByTagName('tr');
+    var rowQuantities = tableBody.getElementsByClassName('row-quantities');
+    var rowCodes = tableBody.getElementsByClassName('row-codes');
+    if (tableBody.getElementsByClassName('row-codes').length == 0) {
+        quantityIn.value = 1;
+        tableBody.appendChild(row);
+    } else {
+        var codeMatchCounter = 0;
+        for (var i = 0; i < rowCodes.length; i++) {
+            if(rowCodes[i].value == code) {
+                codeMatchCounter += 1;
+                var rowCols = rowSingles[i].getElementsByTagName('td');
+                rowCols[2].firstChild.value = parseInt(rowCols[2].firstChild.value) + 1;
+                console.log(codeMatchCounter);
+            }
+        }
+        if (codeMatchCounter == 0) {
+            quantityIn.value = 1;
+            tableBody.appendChild(row);
+        }
+    }
+
+
+
+
     inputHidden.setAttribute('value', code + ':' + quantityIn.value);
+    // Bind elements
 
     /* Checking duplications */
 
-    var rowQuantities = tableBody.getElementsByClassName('row-code');
-    var temp = [];
-    for (var i = 0; i < rowQuantities.length; i++) {
-        temp[i] = rowQuantities[i].value;
-    }
-    console.log(temp);
-    if(temp.indexOf(code) == 1) {
-        console.log(temp);
-    }
+
 
     /* Calculating total cost */
 
