@@ -165,29 +165,41 @@ function model_edit_product($old_code, $new_product_name, $new_category_name, $n
     return true;
 }
 
-function model_buy($code, $quantity) {
+function model_buy($code, $name, $category_id, $quantity, $new_quantity, $price, $new_price, $sale_value, $total_price) {
     global $l;
-    $query = 'UPDATE kaubad
+    $query_update = 'UPDATE kaubad
               SET Kogus = ?
               WHERE Tootekood = ?';
-    $stmt = mysqli_prepare($l, $query);
-    mysqli_stmt_bind_param($stmt, 'is', $quantity, $code);
-    mysqli_stmt_execute($stmt);
+    $stmt_update = mysqli_prepare($l, $query_update);
+    mysqli_stmt_bind_param($stmt_update, 'is', $new_quantity, $code);
+    mysqli_stmt_execute($stmt_update);
+    mysqli_stmt_close($stmt_update);
+
+    $query_insert =
+    'INSERT INTO kassa_logi (Toote_nimetus, Toote_kood, Toote_kategooria, Toote_kogus,Toote_hind, Toote_muudetud_hind, Allahindlus_tootelt, Toote_koguse_hind)
+            VALUES (?,?,?,?,?,?,?,?)';
+    $stmt_insert = mysqli_prepare($l, $query_insert);
+    mysqli_stmt_bind_param($stmt_insert, 'ssiidddd', $name, $code, $category_id, $quantity, $price, $new_price, $sale_value, $total_price);
+    mysqli_stmt_execute($stmt_insert);
     mysqli_stmt_close($stmt);
     return true;
 }
 
-function model_product_quantity($code) {
+function model_product_attribute($code) {
     global $l;
-    $query = 'SELECT Kogus FROM kaubad WHERE Tootekood = ?';
+    $query = 'SELECT Nimetus, Kategooria, Tootekood, Kogus, Hind FROM kaubad WHERE Tootekood = ?';
     $stmt = mysqli_prepare($l, $query);
     mysqli_stmt_bind_param($stmt, 's', $code);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $quantity);
-    $quantities = array();
+    mysqli_stmt_bind_result($stmt, $name, $category, $code, $quantity, $price);
+    $values = array();
     while (mysqli_stmt_fetch($stmt)) {
-        $quantities[] = $quantity;
+        $values[] = $name;
+        $values[] = $category;
+        $values[] = $code;
+        $values[] = $quantity;
+        $values[] = $price;
     }
     mysqli_stmt_close($stmt);
-    return $quantities[0];
+    return $values;
 }

@@ -5,7 +5,7 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="login.css">
   </head>
-  <body>
+  <body background="login_back.png">
     <div id="header">
       <a href="login.php"><span id="header-title"># LADU</span></a>
     </div>
@@ -27,6 +27,10 @@
                 <tr>
                   <th class="row-title">Korda parooli:</th>
                   <td><input type="password" name="password"></td>
+                </tr>
+                <tr>
+                  <th class="row-title">E-mail:</th>
+                  <td><input type="email" name="email"></td>
                 </tr>
                 <tr>
                   <td colspan="2" align="center" height="50px">

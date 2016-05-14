@@ -421,7 +421,7 @@ function addToShoppingCart(name, code, price, quantity) {
 
     if (rowCodes.length == 0) {
         quantityIn.value = 1;
-        inputHidden.setAttribute('value', code + ':' + '1');
+        inputHidden.setAttribute('value', code + ':' + '1' + ':' + priceIn.value);
         tableBody.appendChild(row);
         totalCostDiv.textContent = (parseFloat(totalCostDiv.textContent) + price).toFixed(2) + " €";
     } else {
@@ -434,8 +434,8 @@ function addToShoppingCart(name, code, price, quantity) {
                     rowQuantities[i].value = quantity;
                     alert("Toote '" + name + "' kogus laos on " + quantity + "!");
                 } else {
-                    inputHiddens[i].setAttribute('value', code + ":" + rowCols[2].firstChild.value);
                     rowCols[2].firstChild.value = parseInt(rowCols[2].firstChild.value) + 1;
+                    inputHiddens[i].setAttribute('value', code + ':' + rowCols[2].firstChild.value + ':' + rowCols[3].firstChild.value);
                     totalCostDiv.textContent = (parseFloat(totalCostDiv.textContent) + price).toFixed(2) + " €";
                 }
             }
@@ -443,7 +443,7 @@ function addToShoppingCart(name, code, price, quantity) {
         if (codeMatchCounter == 0) {
             quantityIn.value = 1;
             tableBody.appendChild(row);
-            inputHidden.setAttribute('value', code + ':' + '1');
+            inputHidden.setAttribute('value', code + ':' + '1' + ':' + priceIn.value);
             totalCostDiv.textContent = (parseFloat(totalCostDiv.textContent) + price).toFixed(2) + " €";
         }
     }
@@ -453,8 +453,17 @@ function addToShoppingCart(name, code, price, quantity) {
         if (quantityIn.value > quantity) {
             quantityIn.value = quantity;
             alert("Toodet " + name + " on laos " + quantity) + ".";
+        } else {
+            inputHidden.setAttribute('value', code + ':' + quantityIn.value + ':' + priceIn.value);
         }
     });
+
+    priceIn.addEventListener('change', function(event) {
+        inputHidden.setAttribute('value', code + ':' + quantityIn.value + ':' + priceIn.value);
+    });
+
+
+
 }
 
  /**

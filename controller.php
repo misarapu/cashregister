@@ -30,12 +30,17 @@ function controller_category_id($category_name) {
     return model_category_id($category_name);
 }
 
-function controller_product_quantity($code) {
+function controller_product_attribute($code) {
     if ($code == '') {
         return false;
     }
-    return model_product_quantity($code);
+    return model_product_attribute($code);
 }
+
+
+
+
+
 
 /**
  * Delete product controller
@@ -60,13 +65,13 @@ function controller_delete_category($id) {
 /**
  * Shopping cart controller
  */
-function controller_buy($code, $new_quantity) {
-    if ($code == '' || $new_quantity < 0) {
-        echo "negatiivne";
-        return false;
-    }
-    return model_buy($code, $new_quantity);
-}
+ function controller_buy($code, $name, $category_id, $quantity, $new_quantity, $price, $new_price, $sale_value, $total_price) {
+     if ($code == '' || $new_quantity < 0) {
+         echo "negatiivne";
+         return false;
+     }
+     return model_buy($code, $name, $category_id, $quantity, $new_quantity, $price, $new_price, $sale_value, $total_price);
+ }
 
 /**
  * Edit category controller

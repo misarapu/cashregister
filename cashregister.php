@@ -45,13 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
         case 'buy-product':
             foreach ($_POST['product'] as $value) {
-                list($code, $quantity) = explode(':', $value);
+                list($code, $quantity, $new_price) = explode(':', $value);
+                $name = controller_product_attribute($code)[0];
+                $category_id = intval(controller_product_attribute($code)[1]);
                 $quantity = intval($quantity);
-                $new_quantity = controller_product_quantity($code) - $quantity;
+                $new_quantity = controller_product_attribute($code)[3] - $quantity;
+                $price = doubleval(controller_product_attribute($code)[4]);
+                $new_price = doubleval($new_price);
+                $sale_value = $new_price / $price;
+                $total_price = $quantity * $new_price;
                 if ($new_quantity < 0) {
                     echo "negatiivne toote kogus";
                 } else {
-                    $result = controller_buy($code, $new_quantity);
+                    $result = controller_buy($code, $name, $category_id, $quantity, $new_quantity, $price, $new_price, $sale_value, $total_price);
                 }
             }
             break;

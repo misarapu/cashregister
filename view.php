@@ -60,7 +60,7 @@
                 <div id="categories-div">
                     <div class="cp-btn-container" style="display: inline-block">
                         <button type="button" class="add-cp-btn" id="add-category-page" style="background-color: #CDDC39" onclick="configHideShow('category-add-div')">
-                            <img class="logo-img" src="Plus-64.png" alt="Add Logo"/>
+                            <img class="logo-img" src="./Icons/Plus-64.png" alt="Add Logo"/>
                         </button>
                     </div>
                     <?php foreach(model_load_catergory() as $block): ?>
@@ -72,9 +72,13 @@
                                 <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
                                     <input type="hidden" name="action" value="delete-category">
                                     <input type="hidden" name="id" value="<?= $block['Id']; ?>">
-                                    <button type="submit" class="del-cp-btn">x</button>
+                                    <button type="submit" class="del-cp-btn">
+                                        <img class="logo-img" src="./Icons/Delete-64.png" alt="Add Logo"/>
+                                    </button>
                                 </form>
-                                <button type="button" class="edit-cp-btn" onclick="showCategoryEdit('<?= $block['Name']; ?>', '<?= $_SERVER['PHP_SELF']; ?>')">e</button>
+                                <button type="button" class="edit-cp-btn" onclick="showCategoryEdit('<?= $block['Name']; ?>', '<?= $_SERVER['PHP_SELF']; ?>')">
+                                    <img class="logo-img" src="./Icons/Edit-64.png" alt="Add Logo"/>
+                                </button>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -85,13 +89,13 @@
                 <?php foreach(model_load_catergory() as $block): ?>
                     <div class="cp-btn-container" id="cp-id-<?= $block['Id']; ?>">
                         <button type="button" class="add-cp-btn" style="background-color: #00bcd4" onclick="configHideShow('categories-div')">
-                            <img class="logo-img" src="Back-64.png" alt="Back Logo" />
+                            <img class="logo-img" src="./Icons/Back-64.png" alt="Back Logo" />
                         </button>
                     </div>
 
                     <div class="cp-btn-container" id="cp-id-<?= $block['Id'] ?>">
                         <button type="button" class="add-cp-btn" style="background-color: #00bcd4" onclick="addProduct('<?= $block['Name']; ?>')">
-                            <img class="logo-img" src="Plus-64.png" alt="Add Logo" />
+                            <img class="logo-img" src="./Icons/Plus-64.png" alt="Add Logo" />
                         </button>
                     </div>
                 <?php endforeach; ?>
@@ -110,9 +114,13 @@
                             <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
                                 <input type="hidden" name="action" value="delete-product">
                                 <input type="hidden" name="id" value="<?= $block['ProId']; ?>">
-                                <button type="submit" class="del-cp-btn">x</button>
+                                <button type="submit" class="del-cp-btn">
+                                    <img class="logo-img" src="./Icons/Delete-64.png" alt="Add Logo"/>
+                                </button>
                             </form>
-                            <button type="button" class="edit-cp-btn" onclick="showProductEdit('<?= $block['ProName']; ?>', '<?= $block['CatName']; ?>', '<?= $block['ProCode']; ?>', '<?= $block['ProQuantity']; ?>', '<?= $block['ProPrice']; ?>', '<?= $_SERVER['PHP_SELF']; ?>')">e</button>
+                            <button type="button" class="edit-cp-btn" onclick="showProductEdit('<?= $block['ProName']; ?>', '<?= $block['CatName']; ?>', '<?= $block['ProCode']; ?>', '<?= $block['ProQuantity']; ?>', '<?= $block['ProPrice']; ?>', '<?= $_SERVER['PHP_SELF']; ?>')">
+                                <img class="logo-img" src="./Icons/Edit-64.png" alt="Add Logo"/>
+                            </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -204,25 +212,27 @@
             <!-- Menu buttons -->
             <div id="menu-btn-container">
                 <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="home()">
-                    <img class="logo-img" src="Home-64.png" alt="Home Logo"/>
+                    <img class="logo-img" src="./Icons/Home-64.png" alt="Home Logo"/>
                 </button>
                 <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    <img class="logo-img" src="Search-64.png" alt="Search Logo"/>
+                    <img class="logo-img" src="./Icons/Search-64.png" alt="Search Logo"/>
                 </button>
                 <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    <img class="logo-img" src="Database-64.png" alt="Database Logo"/>
+                    <img class="logo-img" src="./Icons/Futures-64.png" alt="History Logo"/>
                 </button>
                 <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    <img class="logo-img" src="Settings-64.png" alt="Search Logo"/>
+                    <img class="logo-img" src="./Icons/Coins-64.png" alt="History Logo"/>
+                </button>
+                <a href="http://enos.itcollege.ee/phpmyadmin/" target="_blank">
+                    <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                        <img class="logo-img" src="./Icons/Database-64.png" alt="Database Logo"/>
+                    </button>
+                </a>
+                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                    <img class="logo-img" src="./Icons/Settings-64.png" alt="Search Logo"/>
                 </button>
                 <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    #
-                </button>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    #
-                </button>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    <img class="logo-img" src="Logout_Rounded-64.png" alt="Logout Logo"/>
+                    <img class="logo-img" src="./Icons/Logout_Rounded-64.png" alt="Logout Logo"/>
                 </button>
             </div>
             <!-- END menu buttons -->

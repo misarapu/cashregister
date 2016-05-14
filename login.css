@@ -2,6 +2,11 @@
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
+body {
+     background-repeat: no-repeat;
+     background-size: 100% auto; 
+}
+
 div#header {
     width: 800px;
     height: 100px;

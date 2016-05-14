@@ -5,7 +5,7 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="login.css">
   </head>
-  <body>
+  <body background="login_back.png">
     <div id="header">
       <a href="login.php"><span id="header-title"># LADU</span></a>
     </div>
@@ -33,6 +33,7 @@
                 <tr>
                   <th></th>
                   <td id="forgot-pass">
+                      <br>
                     <span><a href="#">Unustasid parooli</a></span>
                   </td>
                 </tr>
