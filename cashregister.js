@@ -318,13 +318,7 @@ function showCategoryEdit(oldCategoryName, action) {
  */
 function addToShoppingCart(name, code, price, quantity) {
 
-    /* Creating shopping cart elements */
 
-    // Get elements
-    var tableMain = document.querySelector('#order-list table');
-    var tableBody = document.querySelector('#order-list tbody');
-    var totalCostDiv = document.getElementById('cost-total');
-    var cancelButton = document.getElementById('cancel-order-btn');
 
     // Create elements
     var row = document.createElement('tr');
@@ -365,60 +359,16 @@ function addToShoppingCart(name, code, price, quantity) {
     inputHidden.setAttribute('name', 'product[]');
     inputHidden.setAttribute('class', 'hidden-product-input');
 
-    // Bind elements
-    row.appendChild(nameTd);
-    row.appendChild(codeTd);
-    row.appendChild(quantityTd);
-    row.appendChild(priceTd);
-    row.appendChild(deleteTd);
-    nameTd.appendChild(nameIn);
-    codeTd.appendChild(codeIn);
-    quantityTd.appendChild(quantityIn);
-    priceTd.appendChild(priceIn);
-    deleteTd.appendChild(deleteButton);
-    row.appendChild(inputHidden);
-
-    /* Adding row to table */
-
     // Get elements
+    var tableMain = document.querySelector('#order-list table');
+    var tableBody = document.querySelector('#order-list tbody');
+    var totalCostDiv = document.getElementById('cost-total');
+    var cancelButton = document.getElementById('cancel-order-btn');
     var rowSingles = tableBody.getElementsByTagName('tr');
     var rowCodes = tableBody.getElementsByClassName('row-codes');
     var rowQuantities = tableBody.getElementsByClassName('row-quantities');
-    var rowPrices = document.getElementsByClassName('row-prices');
+    var rowPrices = tableBody.getElementsByClassName('row-prices');
     var inputHiddens = tableBody.getElementsByClassName('hidden-product-input');
-    if (rowCodes.length == 0) {
-        quantityIn.value = 1;
-        tableBody.appendChild(row);
-        inputHidden.setAttribute('value', code + ':' + '1');
-        tableBody.appendChild(row);
-    } else {
-        var codeMatchCounter = 0;
-        for (var i = 0; i < rowCodes.length; i++) {
-            if (rowCodes[i].value == code) {
-                codeMatchCounter += 1;
-                var rowCols = rowSingles[i].getElementsByTagName('td');
-                rowCols[2].firstChild.value = parseInt(rowCols[2].firstChild.value) + 1;
-                inputHiddens[i].setAttribute('value', code + ":" + rowCols[2].firstChild.value);
-                if (rowQuantities[i].value >= quantity) {
-                    rowQuantities[i].value = quantity;
-                    alert("Toote '" + name + "' kogus laos on " + quantity + "!");
-                }
-            }
-        }
-        if (codeMatchCounter == 0) {
-            quantityIn.value = 1;
-            tableBody.appendChild(row);
-            inputHidden.setAttribute('value', code + ':' + '1');
-        }
-    }
-
-    /* Quantity control */
-    quantityIn.addEventListener('change', function(event) {
-        if (quantityIn.value > quantity) {
-            quantityIn.value = quantity;
-            alert("Toodet " + name + " on laos " + quantity) + ".";
-        }
-    });
 
     /* Calculating total cost */
 
@@ -426,7 +376,7 @@ function addToShoppingCart(name, code, price, quantity) {
         totalCostDiv.textContent = (0).toFixed(2) + " €";
     }
 
-    tableMain.addEventListener('change', function(event) {
+    tableBody.addEventListener('change', function(event) {
         var newTotalCost = 0;
         for (var i = 0; i < rowPrices.length; i++) {
             newTotalCost = newTotalCost + parseInt(rowQuantities[i].value) * parseFloat(rowPrices[i].value);
@@ -452,12 +402,60 @@ function addToShoppingCart(name, code, price, quantity) {
     });
 
 
+    // Bind elements
+    row.appendChild(nameTd);
+    row.appendChild(codeTd);
+    row.appendChild(quantityTd);
+    row.appendChild(priceTd);
+    row.appendChild(deleteTd);
+    nameTd.appendChild(nameIn);
+    codeTd.appendChild(codeIn);
+    quantityTd.appendChild(quantityIn);
+    priceTd.appendChild(priceIn);
+    deleteTd.appendChild(deleteButton);
+    row.appendChild(inputHidden);
+
+    /* Adding row to table */
+
+    // Get elements
+
+    if (rowCodes.length == 0) {
+        quantityIn.value = 1;
+        inputHidden.setAttribute('value', code + ':' + '1');
+        tableBody.appendChild(row);
+        totalCostDiv.textContent = (parseFloat(totalCostDiv.textContent) + price).toFixed(2) + " €";
+    } else {
+        var codeMatchCounter = 0;
+        for (var i = 0; i < rowCodes.length; i++) {
+            if (rowCodes[i].value == code) {
+                codeMatchCounter += 1;
+                var rowCols = rowSingles[i].getElementsByTagName('td');
+                if (rowQuantities[i].value >= quantity) {
+                    rowQuantities[i].value = quantity;
+                    alert("Toote '" + name + "' kogus laos on " + quantity + "!");
+                } else {
+                    inputHiddens[i].setAttribute('value', code + ":" + rowCols[2].firstChild.value);
+                    rowCols[2].firstChild.value = parseInt(rowCols[2].firstChild.value) + 1;
+                    totalCostDiv.textContent = (parseFloat(totalCostDiv.textContent) + price).toFixed(2) + " €";
+                }
+            }
+        }
+        if (codeMatchCounter == 0) {
+            quantityIn.value = 1;
+            tableBody.appendChild(row);
+            inputHidden.setAttribute('value', code + ':' + '1');
+            totalCostDiv.textContent = (parseFloat(totalCostDiv.textContent) + price).toFixed(2) + " €";
+        }
+    }
+
+    /* Quantity control */
+    quantityIn.addEventListener('change', function(event) {
+        if (quantityIn.value > quantity) {
+            quantityIn.value = quantity;
+            alert("Toodet " + name + " on laos " + quantity) + ".";
+        }
+    });
 }
-
-
-
-
-
 
  /**
     * Resetting form fields
