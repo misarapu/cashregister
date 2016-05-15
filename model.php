@@ -7,7 +7,9 @@ $db = "poe_ladu";
 
 $l = mysqli_connect($host, $user, $pass, $db);
 mysqli_query($l, "SET CHARACTER SET UTF8") or die("Error, ei saa andmebaasi charsetti seatud");
-
+if (!$l) {
+    die('Could not connect: ' . mysqli_error($l));
+}
 /**
  * Model load category
  */
@@ -187,13 +189,14 @@ function model_buy($code, $name, $category_id, $quantity, $new_quantity, $price,
 
 function model_product_attribute($code) {
     global $l;
-    $query = 'SELECT Nimetus, Kategooria, Tootekood, Kogus, Hind FROM kaubad WHERE Tootekood = ?';
+    $query = 'SELECT Id, Nimetus, Kategooria, Tootekood, Kogus, Hind FROM kaubad WHERE Tootekood = ?';
     $stmt = mysqli_prepare($l, $query);
     mysqli_stmt_bind_param($stmt, 's', $code);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $name, $category, $code, $quantity, $price);
+    mysqli_stmt_bind_result($stmt, $id, $name, $category, $code, $quantity, $price);
     $values = array();
     while (mysqli_stmt_fetch($stmt)) {
+        $values[] = $id;
         $values[] = $name;
         $values[] = $category;
         $values[] = $code;
@@ -202,4 +205,55 @@ function model_product_attribute($code) {
     }
     mysqli_stmt_close($stmt);
     return $values;
+}
+
+function model_search($str) {
+    global $l;
+    $query = "SELECT kategooriad.Nimetus, kaubad.Nimetus, kaubad.Tootekood, kaubad.Hind, kaubad.Kogus
+        	  FROM kategooriad
+              JOIN kaubad
+              ON kategooriad.Id = kaubad.Kategooria
+              WHERE kaubad.Nimetus
+              LIKE '%$str%'";
+    $stmt = mysqli_prepare($l, $query);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $catName, $proName, $proCode, $proPrice, $proQuantity);
+    $search = array();
+    while (mysqli_stmt_fetch($stmt)) {
+        $search[0] = $proName;
+        $search[1] = $catName;
+        $search[2] = $proCode;
+        $search[3] = $proQuantity;
+        $search[4] = $proPrice;
+        /*$search[] = array(
+            'CatName' => $catName,
+            'ProName' => $proName,
+            'ProCode' => $proCode,
+            'ProPrice' => $proPrice,
+            'ProQuantity' => $proQuantity
+        );*/
+    }
+    mysqli_stmt_close($stmt);
+    return $search;
+}
+
+function model_load_product_table() {
+    global $l;
+    $query = 'SELECT Id, Nimetus, Kategooria, Tootekood, Kogus, Hind FROM kaubad ORDER BY Nimetus ASC';
+    $stmt = mysqli_prepare($l, $query);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $id, $product, $category, $code, $quantity, $price);
+    $rows = array();
+    while (mysqli_stmt_fetch($stmt)) {
+        $rows[] = array(
+            'Id' => $id,
+            'Product' => $product,
+            'Category' => $category,
+            'Code' => $code,
+            'Quantity' => $quantity,
+            'Price' => $price
+        );
+    }
+    mysqli_stmt_close($stmt);
+    return $rows;
 }

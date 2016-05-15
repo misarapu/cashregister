@@ -1,10 +1,10 @@
 * {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 body {
      background-repeat: no-repeat;
-     background-size: 100% auto; 
+     background-size: 100% auto;
 }
 
 div#header {
@@ -20,7 +20,7 @@ div#header {
 }
 
 div#header a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 span#header-title {
@@ -82,5 +82,5 @@ button#action-button {
 }
 
 #action-button:hover{
-  border: 1px groove white;
+    border: 1px groove white;
 }

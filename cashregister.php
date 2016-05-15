@@ -46,20 +46,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case 'buy-product':
             foreach ($_POST['product'] as $value) {
                 list($code, $quantity, $new_price) = explode(':', $value);
-                $name = controller_product_attribute($code)[0];
-                $category_id = intval(controller_product_attribute($code)[1]);
+                $id = intval(controller_product_attribute($code)[0]);
+                $name = controller_product_attribute($code)[1];
+                $category_id = intval(controller_product_attribute($code)[2]);
                 $quantity = intval($quantity);
-                $new_quantity = controller_product_attribute($code)[3] - $quantity;
-                $price = doubleval(controller_product_attribute($code)[4]);
+                $new_quantity = controller_product_attribute($code)[4] - $quantity;
+                $price = doubleval(controller_product_attribute($code)[5]);
                 $new_price = doubleval($new_price);
                 $sale_value = $new_price / $price;
                 $total_price = $quantity * $new_price;
-                if ($new_quantity < 0) {
-                    echo "negatiivne toote kogus";
+                if ($new_quantity == 0) {
+                    $result = controller_delete_product($id);
                 } else {
                     $result = controller_buy($code, $name, $category_id, $quantity, $new_quantity, $price, $new_price, $sale_value, $total_price);
                 }
             }
+            break;
+        case 'search':
+            $search_value = $_POST['search-value'];
+            $result = controller_search($search_value);
             break;
     }
 
@@ -72,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     exit;
 }
+
+
 
 require 'view.php';
 mysqli_close($l);

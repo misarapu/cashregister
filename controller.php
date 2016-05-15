@@ -92,3 +92,9 @@ function controller_edit_product($old_code, $new_product_name, $new_category_nam
     }
     return model_edit_product($old_code, $new_product_name, $new_category_name, $new_code, $new_quantity, $new_price);
 }
+
+function controller_search($search_value) {
+    if ($search_value == '') {
+        return model_load_product_table();
+    }
+}

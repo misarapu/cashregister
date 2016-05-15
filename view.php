@@ -41,6 +41,7 @@
                         <div id="cost-total">0.00 €</div>
                     </div>
                     <div id="active-button-container">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                         <button type="submit" class="submit-btn" style="background-color: #CDDC39">
                             Maksa
                         </button>
@@ -72,6 +73,7 @@
                                 <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
                                     <input type="hidden" name="action" value="delete-category">
                                     <input type="hidden" name="id" value="<?= $block['Id']; ?>">
+                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                                     <button type="submit" class="del-cp-btn">
                                         <img class="logo-img" src="./Icons/Delete-64.png" alt="Add Logo"/>
                                     </button>
@@ -114,6 +116,7 @@
                             <form action="<?= $_SERVER['PHP_SELF'];?>" method="post">
                                 <input type="hidden" name="action" value="delete-product">
                                 <input type="hidden" name="id" value="<?= $block['ProId']; ?>">
+                                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                                 <button type="submit" class="del-cp-btn">
                                     <img class="logo-img" src="./Icons/Delete-64.png" alt="Add Logo"/>
                                 </button>
@@ -131,6 +134,7 @@
                     <h1 id="adding-title"># Kategooria lisamine</h1>
                     <form id="adding-cat-form" action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
                         <input type="hidden" name="action" value="add-category">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                         <table>
                             <tbody>
                                 <tr>
@@ -140,6 +144,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <div class="input-button-container">
+                                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                                             <button type="submit" class="submit-btn" id="category-submit-btn" name="category-submit-btn" style="background-color: #CDDC39">
                                                 Salvesta
                                             </button>
@@ -160,6 +165,7 @@
                     <h1 id="adding-title"># Toote lisamine</h1>
                     <form id="adding-protuct-form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
                         <input type="hidden" name="action" value="add-product">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                         <table>
                             <tbody>
                                 <tr>
@@ -206,34 +212,80 @@
                     </form>
                 </div>
                 <!-- END product adding form -->
+
+                <!-- Search div -->
+                <div id="search-div" style="display: none">
+                    <h1>Otsing</h1>
+                    <div id="div-search">
+                            <input type="hidden" name="action" value="search">
+                                <table>
+                                    <tr>
+                                        <td>Nimi/kood:</td>
+                                        <td><input type="text" id="search-value" name="search-value" onkeypress="ajax_search();"></td>
+                                        <td><button type="submit">Otsi</button></td>
+                                        <td><button type="submit">Muuda</button></td>
+                                    </tr>
+                                </table>
+                    </div>
+                    <div id="div-products-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Toode</th>
+                                    <th>Kategooria</th>
+                                    <th>Kood</th>
+                                    <th>Kogus</th>
+                                    <th>Hind</th>
+                                </tr>
+                                <tbody id="tbody-search">
+                                    <?php foreach (model_load_product_table() as $value): ?>
+                                        <tr>
+                                            <td><input type="text" name="table-product" value="<?= $value['Product']; ?>"></td>
+                                            <td><input type="text" name="table-category" value="<?= $value['Category']; ?>"></td>
+                                            <td><input type="text" name="table-code" value="<?= $value['Code']; ?>"></td>
+                                            <td><input type="number" name="table-quantity" value="<?= $value['Quantity']; ?>"></td>
+                                            <td><input type="number" name="table-price" value="<?= $value['Price']; ?>"></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <!-- END search div -->
+
             </div>
             <!-- END category-product button main container -->
 
             <!-- Menu buttons -->
             <div id="menu-btn-container">
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="home()">
+                <button type="button" class="small-menu-btn" style="height: 70px; width: 70px" onclick="home()">
                     <img class="logo-img" src="./Icons/Home-64.png" alt="Home Logo"/>
                 </button>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                <button type="submit" class="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('search-div')">
                     <img class="logo-img" src="./Icons/Search-64.png" alt="Search Logo"/>
                 </button>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                <button type="button" class="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
                     <img class="logo-img" src="./Icons/Futures-64.png" alt="History Logo"/>
                 </button>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                <button type="button" class="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
                     <img class="logo-img" src="./Icons/Coins-64.png" alt="History Logo"/>
                 </button>
                 <a href="http://enos.itcollege.ee/phpmyadmin/" target="_blank">
-                    <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                    <button type="button" class="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
                         <img class="logo-img" src="./Icons/Database-64.png" alt="Database Logo"/>
                     </button>
                 </a>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
+                <button type="button" class="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
                     <img class="logo-img" src="./Icons/Settings-64.png" alt="Search Logo"/>
                 </button>
-                <button type="button" id="small-menu-btn" style="height: 70px; width: 70px" onclick="configHideShow('categories-div')">
-                    <img class="logo-img" src="./Icons/Logout_Rounded-64.png" alt="Logout Logo"/>
-                </button>
+                <form action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
+                    <input type="hidden" name="action" value="logout">
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+                    <button type="submit" class="small-menu-btn" style="height: 70px; width: 70px">
+                        <img class="logo-img" src="./Icons/Logout_Rounded-64.png" alt="Logout Logo"/>
+                    </button>
+                </form>
             </div>
             <!-- END menu buttons -->
         </div>

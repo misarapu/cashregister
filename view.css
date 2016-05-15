@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/*                                                                 BASICS                                                                         */
+/*                                 BASICS                                     */
 /*----------------------------------------------------------------------------*/
 
 * {
@@ -33,7 +33,7 @@ button {
 }
 
 /*----------------------------------------------------------------------------*/
-/*                                                         MAIN-CONTAINER                                                                 */
+/*                             MAIN-CONTAINER                                 */
 /*----------------------------------------------------------------------------*/
 
 /* Main container */
@@ -59,7 +59,7 @@ button {
 }
 
 /*----------------------------------------------------------------------------*/
-/*                                                    SHOPPING CART CONTAINER                                                     */
+/*                        SHOPPING CART CONTAINER                             */
 /*----------------------------------------------------------------------------*/
 
 /* Shopping cart itle */
@@ -178,7 +178,7 @@ button.active-del-btn:hover {
 }
 
 /*----------------------------------------------------------------------------*/
-/*                                     PRODUCTS AND CATEGORIES CONTAINERS                                             */
+/*                    PRODUCTS AND CATEGORIES CONTAINERS                      */
 /*----------------------------------------------------------------------------*/
 
 /* Products and categories base container */
@@ -205,7 +205,7 @@ button.active-del-btn:hover {
 #product-category-base th {
     text-align: right;
 }
-#category-add-div, #product-add-div, #category-edit-div, #product-edit-div {
+#category-add-div, #product-add-div, #category-edit-div, #product-edit-div, #search-div {
     margin: 25px;
     width: 700px;
 }
@@ -213,7 +213,7 @@ button.active-del-btn:hover {
     margin-bottom: 50px;
 }
 /*----------------------------------------------------------------------------*/
-/*                                        PRODUCTS AND CATEGORIES BUTTONS                                                 */
+/*                     PRODUCTS AND CATEGORIES BUTTONS                        */
 /*----------------------------------------------------------------------------*/
 
 /* Category and product single container */
@@ -300,7 +300,7 @@ button.active-del-btn:hover {
 }
 
 /*----------------------------------------------------------------------------*/
-/*                                                    SAVE-CANCEl-BACK BUTTONS                                                    */
+/*                       SAVE-CANCEl-BACK BUTTONS                             */
 /*----------------------------------------------------------------------------*/
 
 /* Save-cancel-back button container */
@@ -314,19 +314,19 @@ button.active-del-btn:hover {
 }
 
 /* Save-cancel-back button container */
-#small-menu-btn {
+.small-menu-btn {
     width: 50px;
     font-size: 1.5em;
     border: 1px groove black;
     border-radius: 5px;
     background-color: #CDDC39;
 }
-#small-menu-btn:hover {
+.small-menu-btn:hover {
     border: 1px groove white;
 }
 
 /*----------------------------------------------------------------------------*/
-/*                                                        CONFIGURATION BUTTONS                                                     */
+/*                          CONFIGURATION BUTTONS                             */
 /*----------------------------------------------------------------------------*/
 
 /* Configuration buttons container */

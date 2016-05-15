@@ -19,7 +19,6 @@ function addCategory(categoryName) {
  * @param {String} div, mida soovitakse kuvada.
  */
 function configHideShow(showDivId) {
-
     var divs = document.getElementById('product-category-base').children;
     for(var i = 0; i < divs.length; i++) {
         if(divs[i].id == showDivId){
@@ -462,16 +461,31 @@ function addToShoppingCart(name, code, price, quantity) {
         inputHidden.setAttribute('value', code + ':' + quantityIn.value + ':' + priceIn.value);
     });
 
-
-
 }
 
  /**
     * Resetting form fields
     * @param {form name}
-    *                {return page}
+    *        {return page}
     */
 function resetForm(formId, returnPage) {
     document.getElementById(formId).reset();
     configHideShow(returnPage);
+}
+
+function ajax_search(){
+    var hr = new XMLHttpRequest();
+    var url = "ajax.php";
+    var search_value = document.getElementById("search-value").value;
+    var value = "search_value=" + search_value;
+    hr.open("POST", url, true);
+    hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    hr.onreadystatechange = function() {
+	    if(hr.readyState == 4 && hr.status == 200) {
+		    var return_data = hr.responseText;
+			document.getElementById("tbody-search").innerHTML = return_data;
+	    }
+    }
+    hr.send(value);
+    document.getElementById("tbody-search").innerHTML = "processing...";
 }
